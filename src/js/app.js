@@ -36,18 +36,15 @@ App.addGarden = function(e) {
   console.log('Add a garden was clicked');
   this.$main.html(`
     <h2>Add a garden</h2>
-    <form method="post" action="/users/user:id">
+    <form method="post" action="/users/:id/gardens/:id">
       <div class="form-group">
-        <input class="form-control" type="text" name="user[garden][name]" placeholder="Garden Name">
+        <input class="form-control" type="text" name="garden[name]" placeholder="Garden Name">
       </div>
       <div class="form-group">
-        <input class="form-control" type="text" name="garden][description]" placeholder="Description">
+        <input class="form-control" type="text" name="garden[description]" placeholder="Description">
       </div>
       <div class="form-group">
-        <input class="form-control" type="text" name="user[garden][imageLocation]" placeholder="Image">
-      </div>
-      <div class="form-group">
-        <input class="form-control" type="text" name="user[garden][imageLocation]" placeholder="Image Location">
+        <input class="form-control" type="text" name="garden[image]" placeholder="Image">
       </div>
       <div class="form-group">
         <input class="form-control" type="text" name="garden[lat]" placeholder="Garden latitude">
@@ -76,7 +73,31 @@ App.showMap = function(e){
     center: new google.maps.LatLng(51.506178,-0.088369),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-  new google.maps.Map(canvas, mapOptions);
+  App.map = new google.maps.Map(canvas, mapOptions);
+  App.getGardens();
+};
+
+App.getGardens = function(){
+  console.log(this);
+  $.get('http://localhost:3000/api/gardens').done(this.loopThroughGardens);
+};
+
+App.loopThroughGardens = function(data){
+  console.log(data);
+  $.each(data.gardens, (index, garden) => {
+    this.createMarkerForGarden(garden);
+  });
+};
+
+App.createMarkerForGarden = function(garden) {
+  const latlng = new google.maps.LatLng(garden.lat, garden.lng);
+  const marker = new google.maps.Marker({
+    position: latlng,
+    map: App.map
+    // animation: google.maps.Animation.DROP
+  });
+
+  this.addInfoWindowForCamera(garden, marker);
 };
 
 App.register = function(e){

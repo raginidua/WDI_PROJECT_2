@@ -3,7 +3,7 @@ const router  = express.Router();
 
 const authentications = require('../controllers/authentications');
 const users           = require('../controllers/users');
-// const gardens         = require('../controllers/gardens');
+const gardens         = require('../controllers/gardens');
 
 router.route('/register')
   .post(authentications.register);
@@ -17,7 +17,10 @@ router.route('/users/:id')
   .put(users.update)
   .delete(users.delete);
 
-// router.route('/users/:id/gardens')
-//   .post(gardens.new);
+// router.route('/users/:id/gardens/')
+//   .post(gardens.create);
+
+router.route('/gardens')
+  .get(gardens.index);
 
 module.exports = router;
