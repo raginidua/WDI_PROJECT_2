@@ -36,7 +36,7 @@ App.addGarden = function(e) {
   console.log('Add a garden was clicked');
   this.$main.html(`
     <h2>Add a garden</h2>
-    <form method="post" action="/users/:id/gardens/:id">
+    <form method="post" action="/users/gardens/">
       <div class="form-group">
         <input class="form-control" type="text" name="garden[name]" placeholder="Garden Name">
       </div>
@@ -79,13 +79,22 @@ App.showMap = function(e){
 
 App.getGardens = function(){
   console.log(this);
-  $.get('http://localhost:3000/api/gardens').done(this.loopThroughGardens);
+  $.get({
+    url: 'http://localhost:3000/api/gardens'
+    ,
+    headers: {
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfYnNvbnR5cGUiOiJPYmplY3RJRCIsImlkIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbODgsMTE5LDg1LDEyNiwxNzYsMTY1LDIwMyw1Nyw0MSw5MiwzNSwyMDhdfSwiaWF0IjoxNDg0MjE2Mjc4LCJleHAiOjE0ODQzMDI2Nzh9.IdnWuDob6hsSJ4LSepH6JDZeec-iSw9rqfNXpG6K8Bs'
+    }
+  }).done(this.loopThroughGardens.bind(this));
+  // $.get('http://localhost:3000/api/gardens').done(this.loopThroughGardens);
 };
 
 App.loopThroughGardens = function(data){
+  console.log(this);
   console.log(data);
   $.each(data.gardens, (index, garden) => {
-    this.createMarkerForGarden(garden);
+    App.createMarkerForGarden(garden);
+    console.log(garden.name);
   });
 };
 
@@ -93,11 +102,25 @@ App.createMarkerForGarden = function(garden) {
   const latlng = new google.maps.LatLng(garden.lat, garden.lng);
   const marker = new google.maps.Marker({
     position: latlng,
-    map: App.map
-    // animation: google.maps.Animation.DROP
+    map: App.map,
+    animation: google.maps.Animation.DROP
   });
 
-  this.addInfoWindowForCamera(garden, marker);
+  this.addInfoWindowForGarden(garden, marker);
+};
+
+App.addInfoWindowForGarden = function(garden, marker) {
+  google.maps.event.addListener(marker, 'click', () => {
+    if (typeof this.infoWindow !== 'undefined') this.infoWindow.close();
+
+    this.infoWindow = new google.maps.InfoWindow({
+      content: `<h1>${ garden.name}</h1><img src="http://4.bp.blogspot.com/-fmAOkLrczoM/TxEl-o6qdiI/AAAAAAAAH_M/C_c5RjC2dq8/s200/bP1030080%2B%2528Medium%2529.jpg"><p>${garden.description }</p>`
+    });
+
+    this.infoWindow.open(this.map, marker);
+    this.map.setCenter(marker.getPosition());
+    this.map.setZoom(15);
+  });
 };
 
 App.register = function(e){

@@ -34,4 +34,32 @@ user1.save((err, user) => {
     if (err) return console.log('Something went wrong saving garden');
     return console.log(`${garden.name} was saved.`);
   });
+
+  const garden2 = new Garden({
+    name: 'Postmans Park',
+    description: 'A short walk from St Pauls Cathedral lies one of Londons most touching monuments: George Frederic Watts Memorial to Heroic Self-Sacrifice. Within the quiet Postmans Park, nestled beneath a tiled roof, are just over 50 ceramic plaques, each commemorating an ordinary person who lost their life trying to save others. Many of the descriptions are truly heartbreaking, and you can easily spend an entire lunchbreak contemplating their selflessness. ',
+    image: 'tbd',
+    lat: '51.5168433',
+    lng: '-0.0998537',
+    user: user
+  });
+
+  garden2.save((err, garden) => {
+    if (err) return console.log('Something went wrong saving garden');
+    return console.log(`${garden.name} was saved.`);
+  });
+
+  const garden3 = new Garden({
+    name: 'Phoenix Garden',
+    description: 'Tucked behind Charing Cross Road, this is a super spot for a leafy lunchtime break. Look out for frogs and sparrows, which are thriving thanks to an enthusiastic conservation initiative. The garden closed last autumn for redevelopment work (which has been delayed) but has reopened in time to take advantage of our long-awaited spell of improved weather.',
+    image: 'tbd',
+    lat: '51.514444',
+    lng: '-0.1306767',
+    user: user
+  });
+
+  garden3.save((err, garden) => {
+    if (err) return console.log('Something went wrong saving garden');
+    return console.log(`${garden.name} was saved.`);
+  });
 });
