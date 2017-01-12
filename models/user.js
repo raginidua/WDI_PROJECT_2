@@ -3,10 +3,21 @@ const bcrypt    = require('bcrypt');
 const validator = require('validator');
 
 const userSchema = new mongoose.Schema({
-  firstname: { type: String, required: true },
-  lastname: { type: String, required: true },
-  email: { type: String, unique: true, required: true },
-  passwordHash: { type: String, required: true }
+  firstName: { type: String, required: true, trim: true },
+  lastName: { type: String, required: true, trim: true },
+  email: { type: String, unique: true, required: true, trim: true },
+  passwordHash: { type: String, required: true },
+  garden: [{
+    name: { type: String, required: true, trim: true },
+    description: { type: String },
+    imageLocation: { type: String},
+    lng: { type: String, required: true },
+    lat: { type: String, required: true }
+  }, {
+    timestamps: true
+  }]
+}, {
+  timestamps: true
 });
 
 userSchema

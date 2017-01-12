@@ -1,4 +1,5 @@
 const App = App || {};
+const google = google;
 
 App.init = function() {
   this.apiUrl = 'http://localhost:3000/api';
@@ -6,7 +7,9 @@ App.init = function() {
   $('.register').on('click', this.register.bind(this));
   $('.login').on('click', this.login.bind(this));
   $('.logout').on('click', this.logout.bind(this));
-  $('#gardens').on('click', this.showGardens.bind(this));
+  $('.homePage').on('click', this.homePage.bind(this));
+  $('#gardens').on('click', this.showMap.bind(this));
+  $('#addGarden').on('click', this.addGarden.bind(this));
   this.$main.on('submit', 'form', this.handleForm);
 
   if (this.getToken()) {
@@ -19,6 +22,7 @@ App.init = function() {
 App.loggedInState = function(){
   $('.loggedIn').show();
   $('.loggedOut').hide();
+  this.homePage();
 };
 
 App.loggedOutState = function(){
@@ -27,23 +31,52 @@ App.loggedOutState = function(){
   this.register();
 };
 
-App.showGardens = function(e){
+App.addGarden = function(e) {
   if (e) e.preventDefault();
-  console.log('gardens was clicked');
-  const googleMap = googleMap || {};
-  const google = google;
-  googleMap.mapSetup = function() {
-    const canvas = document.getElementById('map-canvas');
-    const mapOptions = {
-      zoom: 12,
-      center: new google.maps.LatLng(51.506178,-0.088369),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+  console.log('Add a garden was clicked');
+  this.$main.html(`
+    <h2>Add a garden</h2>
+    <form method="post" action="/users/user:id">
+      <div class="form-group">
+        <input class="form-control" type="text" name="user[garden][name]" placeholder="Garden Name">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="garden][description]" placeholder="Description">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="user[garden][imageLocation]" placeholder="Image">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="user[garden][imageLocation]" placeholder="Image Location">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="garden[lat]" placeholder="Garden latitude">
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" name="garden[lng]" placeholder="Garden Longitude">
+      </div>
+      <input class="btn btn-primary" type="submit" value="Add Garden">
+    </form>
+  `);
+};
 
-    googleMap.map = new google.maps.Map(canvas, mapOptions);
+App.homePage = function(e) {
+  if (e) e.preventDefault();
+  console.log('Home page was clicked');
+  this.$main.html(`<h1>Welcome to KEY: unlocking the door to London's Secret Gardens</h1>`);
+};
+
+App.showMap = function(e){
+  if (e) e.preventDefault();
+  console.log('Gardens was clicked');
+  this.$main.html(`<div id="map-canvas"></div>`);
+  const canvas = document.getElementById('map-canvas');
+  const mapOptions = {
+    zoom: 12,
+    center: new google.maps.LatLng(51.506178,-0.088369),
+    mapTypeId: google.maps.MapTypeId.ROADMAP
   };
-
-  $(googleMap.mapSetup.bind(googleMap));
+  new google.maps.Map(canvas, mapOptions);
 };
 
 App.register = function(e){
@@ -52,10 +85,10 @@ App.register = function(e){
     <h2>Sign Up</h2>
     <form method="post" action="/register">
       <div class="form-group">
-        <input class="form-control" type="text" name="user[firstname]" placeholder="Firstname">
+        <input class="form-control" type="text" name="user[firstName]" placeholder="First name">
       </div>
       <div class="form-group">
-        <input class="form-control" type="text" name="user[lastname]" placeholder="Lastname">
+        <input class="form-control" type="text" name="user[lastName]" placeholder="Last name">
       </div>
       <div class="form-group">
         <input class="form-control" type="email" name="user[email]" placeholder="Email">
@@ -137,7 +170,3 @@ App.removeToken = function(){
 
 
 $(App.init.bind(App));
-
-
-const googleMap = googleMap || {};
-const google = google;
