@@ -21,6 +21,7 @@ router.route('/users/:id')
 //   .post(gardens.create);
 
 router.route('/gardens')
-  .get(gardens.index);
+  .get(gardens.index)
+  .post(gardens.create);
 
 module.exports = router;

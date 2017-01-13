@@ -4,10 +4,10 @@ const google = google;
 App.init = function() {
   this.apiUrl = 'http://localhost:3000/api';
   const date = new Date().toLocaleString();
-  console.log(date);
+
   $('#time').text(date);
   this.$main  = $('main');
-  // this.$modalcontent = $('modalcontent');
+  // this.$modalcontent = $('.modal-content');
   $('.register').on('click', this.register.bind(this));
   $('.login').on('click', this.login.bind(this));
   $('.logout').on('click', this.logout.bind(this));
@@ -28,12 +28,12 @@ App.loggedInState = function(){
   $('.loggedIn').show();
   $('.loggedOut').hide();
   this.homePage();
+  this.currentUser();
 };
 
 App.loggedOutState = function(){
   $('.loggedIn').hide();
   $('.loggedOut').show();
-  this.loggedOutBase();
 };
 
 App.loggedOut = function() {
@@ -87,15 +87,7 @@ App.showMap = function(e){
 };
 
 App.getGardens = function(){
-  console.log(this);
-  $.get({
-    url: 'http://localhost:3000/api/gardens'
-    ,
-    headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfYnNvbnR5cGUiOiJPYmplY3RJRCIsImlkIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbODgsMTE5LDIwNSwxNDksMjI4LDU4LDE2OCw3NywxMDUsOTcsMTI4LDE2OF19LCJpYXQiOjE0ODQzMDUxMjAsImV4cCI6MTQ4NDM5MTUyMH0.uTmMQ5x56pA9OsBXh26WAgObdNQ8mDzQ8I7kKmH5rfQ'
-    }
-  }).done(this.loopThroughGardens.bind(this));
-  $.get('http://localhost:3000/api/gardens').done(this.loopThroughGardens);
+  this.ajaxRequest(`${this.apiUrl}/gardens`, 'get', null, this.loopThroughGardens.bind(this));
 };
 
 App.loopThroughGardens = function(data){
@@ -224,6 +216,20 @@ App.setToken = function(token){
 
 App.getToken = function(){
   return window.localStorage.getItem('token');
+};
+
+App.currentUser = function() {
+  if (this.getToken()) {
+    const token   = this.getToken();
+    const payload = token.split('.')[1];
+    const userId  = JSON.parse(window.atob(payload)).id;
+    this.ajaxRequest(`${this.apiUrl}/users/${userId}`, 'get', null, data => {
+      $('.navbar-nav').append(`
+        <li class="nav-item loggedIn">
+          <a class="nav-link" href="#">Hello ${data.user.firstName}</a>
+        </li>`);
+    });
+  }
 };
 
 App.removeToken = function(){
