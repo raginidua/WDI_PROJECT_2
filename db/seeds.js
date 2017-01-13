@@ -51,7 +51,7 @@ user1.save((err, user) => {
 
   const garden3 = new Garden({
     name: 'Phoenix Garden',
-    description: 'Tucked behind Charing Cross Road, this is a super spot for a leafy lunchtime break. Look out for frogs and sparrows, which are thriving thanks to an enthusiastic conservation initiative. The garden closed last autumn for redevelopment work (which has been delayed) but has reopened in time to take advantage of our long-awaited spell of improved weather.',
+    description: 'Tucked behind Charing Cross Road, this is a super spot for a leafy lunchtime break. Look out for frogs and sparrows, which are thriving thanks to an enthusiastic conservation initiative.',
     image: 'tbd',
     lat: '51.514444',
     lng: '-0.1306767',

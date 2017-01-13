@@ -3,7 +3,11 @@ const google = google;
 
 App.init = function() {
   this.apiUrl = 'http://localhost:3000/api';
+  const date = new Date().toLocaleString();
+  console.log(date);
+  $('#time').text(date);
   this.$main  = $('main');
+  // this.$modalcontent = $('modalcontent');
   $('.register').on('click', this.register.bind(this));
   $('.login').on('click', this.login.bind(this));
   $('.logout').on('click', this.logout.bind(this));
@@ -11,6 +15,7 @@ App.init = function() {
   $('#gardens').on('click', this.showMap.bind(this));
   $('#addGarden').on('click', this.addGarden.bind(this));
   this.$main.on('submit', 'form', this.handleForm);
+  // instead of the above add in modal content
 
   if (this.getToken()) {
     this.loggedInState();
@@ -28,7 +33,11 @@ App.loggedInState = function(){
 App.loggedOutState = function(){
   $('.loggedIn').hide();
   $('.loggedOut').show();
-  this.register();
+  this.loggedOutBase();
+};
+
+App.loggedOut = function() {
+  this.$main.html(`<h1>Welcome to KEY: unlocking the door to London's Secret Gardens</h1>`);
 };
 
 App.addGarden = function(e) {
@@ -83,10 +92,10 @@ App.getGardens = function(){
     url: 'http://localhost:3000/api/gardens'
     ,
     headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfYnNvbnR5cGUiOiJPYmplY3RJRCIsImlkIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbODgsMTE5LDg1LDEyNiwxNzYsMTY1LDIwMyw1Nyw0MSw5MiwzNSwyMDhdfSwiaWF0IjoxNDg0MjE2Mjc4LCJleHAiOjE0ODQzMDI2Nzh9.IdnWuDob6hsSJ4LSepH6JDZeec-iSw9rqfNXpG6K8Bs'
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfYnNvbnR5cGUiOiJPYmplY3RJRCIsImlkIjp7InR5cGUiOiJCdWZmZXIiLCJkYXRhIjpbODgsMTE5LDIwNSwxNDksMjI4LDU4LDE2OCw3NywxMDUsOTcsMTI4LDE2OF19LCJpYXQiOjE0ODQzMDUxMjAsImV4cCI6MTQ4NDM5MTUyMH0.uTmMQ5x56pA9OsBXh26WAgObdNQ8mDzQ8I7kKmH5rfQ'
     }
   }).done(this.loopThroughGardens.bind(this));
-  // $.get('http://localhost:3000/api/gardens').done(this.loopThroughGardens);
+  $.get('http://localhost:3000/api/gardens').done(this.loopThroughGardens);
 };
 
 App.loopThroughGardens = function(data){
@@ -105,8 +114,17 @@ App.createMarkerForGarden = function(garden) {
     map: App.map,
     animation: google.maps.Animation.DROP
   });
-
+  this.getWeatherInfo(garden);
   this.addInfoWindowForGarden(garden, marker);
+};
+
+App.getWeatherInfo = function(garden) {
+  $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&APPID=a7960494b38d3fe6fb56a4880fc25bc8`).done(data => {
+    const temp = data.list[0].main.temp;
+    const weather = data.list[0].weather[0].description;
+    console.log(temp);
+    console.log(weather);
+  });
 };
 
 App.addInfoWindowForGarden = function(garden, marker) {
