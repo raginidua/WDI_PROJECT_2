@@ -111,7 +111,6 @@ App.createMarkerForGarden = function(garden) {
 };
 
 App.getWeatherInfo = function(garden) {
-  $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&[APIDATA]`).done(data => {
   $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&APPID=[ID]`).done(data => {
     const temp = data.list[0].main.temp;
     const weather = data.list[0].weather[0].description;
