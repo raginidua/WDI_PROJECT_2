@@ -3,10 +3,13 @@ const Garden = require('../models/garden');
 
 function gardensCreate(req, res) {
   const garden = new Garden(req.body.garden);
-  garden.user = req.user;
-
+  garden.user = req.user.id;
   garden.save((err, garden) => {
-    if (err) return res.status(500).json({ message: 'Something went wrong.' });
+    console.log('The current user is', req.user.id);
+    if (err) return res.status(500).json({
+      message: 'Something went wrong.',
+      err
+    });
     return res.status(200).json({ garden });
   });
 }

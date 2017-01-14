@@ -106,18 +106,18 @@ App.createMarkerForGarden = function(garden) {
     map: App.map,
     animation: google.maps.Animation.DROP
   });
-  this.getWeatherInfo(garden);
+  // this.getWeatherInfo(garden);
   this.addInfoWindowForGarden(garden, marker);
 };
 
-App.getWeatherInfo = function(garden) {
-  $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&APPID=[ID]`).done(data => {
-    const temp = data.list[0].main.temp;
-    const weather = data.list[0].weather[0].description;
-    console.log(temp);
-    console.log(weather);
-  });
-};
+// App.getWeatherInfo = function(garden) {
+//   $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&`).done(data => {
+//     const temp = data.list[0].main.temp;
+//     const weather = data.list[0].weather[0].description;
+//     console.log(temp);
+//     console.log(weather);
+//   });
+// };
 
 App.addInfoWindowForGarden = function(garden, marker) {
   google.maps.event.addListener(marker, 'click', () => {
