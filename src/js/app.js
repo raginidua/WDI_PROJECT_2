@@ -45,7 +45,7 @@ App.addGarden = function(e) {
   console.log('Add a garden was clicked');
   this.$main.html(`
     <h2>Add a garden</h2>
-    <form method="post" action="/users/gardens/">
+    <form method="post" action="/gardens">
       <div class="form-group">
         <input class="form-control" type="text" name="garden[name]" placeholder="Garden Name">
       </div>
@@ -111,7 +111,7 @@ App.createMarkerForGarden = function(garden) {
 };
 
 App.getWeatherInfo = function(garden) {
-  $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&APPID=a7960494b38d3fe6fb56a4880fc25bc8`).done(data => {
+  $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&[APIDATA]`).done(data => {
     const temp = data.list[0].main.temp;
     const weather = data.list[0].weather[0].description;
     console.log(temp);
