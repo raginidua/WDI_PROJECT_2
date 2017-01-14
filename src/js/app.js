@@ -7,12 +7,13 @@ App.init = function() {
 
   $('#time').text(date);
   this.$main  = $('main');
+  App.showMap();
   // this.$modalcontent = $('.modal-content');
   $('.register').on('click', this.register.bind(this));
   $('.login').on('click', this.login.bind(this));
   $('.logout').on('click', this.logout.bind(this));
   $('.homePage').on('click', this.homePage.bind(this));
-  $('#gardens').on('click', this.showMap.bind(this));
+  $('#gardens').on('click', this.getGardens.bind(this));
   $('#addGarden').on('click', this.addGarden.bind(this));
   this.$main.on('submit', 'form', this.handleForm);
   // instead of the above add in modal content
@@ -80,11 +81,41 @@ App.showMap = function(e){
   const mapOptions = {
     zoom: 12,
     center: new google.maps.LatLng(51.506178,-0.088369),
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControl: false,
+    zoomControl: true,
+    zoomControlOptions: {
+      position: google.maps.ControlPosition.LEFT_CENTER
+    },
+    scaleControl: true,
+    streetViewControl: true,
+    streetViewControlOptions: {
+      position: google.maps.ControlPosition.LEFT_TOP
+    }
   };
   App.map = new google.maps.Map(canvas, mapOptions);
-  App.getGardens();
 };
+
+// var map = new google.maps.Map(document.getElementById('map'), {
+//          zoom: 12,
+//          center: {lat: -28.643387, lng: 153.612224},
+//          mapTypeControl: true,
+//          mapTypeControlOptions: {
+//              style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+//              position: google.maps.ControlPosition.TOP_CENTER
+//          },
+//          zoomControl: true,
+//          zoomControlOptions: {
+//              position: google.maps.ControlPosition.LEFT_CENTER
+//          },
+//          scaleControl: true,
+//          streetViewControl: true,
+//          streetViewControlOptions: {
+//              position: google.maps.ControlPosition.LEFT_TOP
+//          },
+//          fullscreenControl: true
+//        });
+
 
 App.getGardens = function(){
   this.ajaxRequest(`${this.apiUrl}/gardens`, 'get', null, this.loopThroughGardens.bind(this));
