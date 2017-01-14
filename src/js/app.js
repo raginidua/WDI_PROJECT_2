@@ -124,7 +124,8 @@ App.addInfoWindowForGarden = function(garden, marker) {
     if (typeof this.infoWindow !== 'undefined') this.infoWindow.close();
 
     this.infoWindow = new google.maps.InfoWindow({
-      content: `<h1>${ garden.name}</h1><img src="http://4.bp.blogspot.com/-fmAOkLrczoM/TxEl-o6qdiI/AAAAAAAAH_M/C_c5RjC2dq8/s200/bP1030080%2B%2528Medium%2529.jpg"><p>${garden.description }</p>`
+      content: `<div class="infoWindow"><header class = "infoWindowHeader"><h4>${ garden.name}</h4></header><img src="${garden.image}"></img><p>${garden.description }</p></div>`,
+      maxWidth: '260'
     });
 
     this.infoWindow.open(this.map, marker);
