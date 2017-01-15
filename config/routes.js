@@ -17,11 +17,12 @@ router.route('/users/:id')
   .put(users.update)
   .delete(users.delete);
 
-// router.route('/users/:id/gardens/')
-//   .post(gardens.create);
-
 router.route('/gardens')
   .get(gardens.index)
   .post(gardens.create);
+
+router.route('/gardens/:id')
+  .put(gardens.update)
+  .delete(gardens.delete);
 
 module.exports = router;
