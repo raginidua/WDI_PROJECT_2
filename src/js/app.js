@@ -67,8 +67,9 @@ App.loggedOut = function() {
 App.register = function(e){
   if (e) e.preventDefault();
   this.$modalcontent.html(`
+    <div class="signInModal">
     <h2>Sign Up</h2>
-    <form method='post' action='/register'>
+    <form method='post' action='/register' class='signInForm'>
       <div class='form-group'>
         <input class='form-control' type='text' name='user[firstName]' placeholder='First name'>
       </div>
@@ -86,6 +87,7 @@ App.register = function(e){
       </div>
       <input class='btn btn-primary' type='submit' value='Register'>
     </form>
+    </div>
   `);
   this.$modal.modal('show');
 };
@@ -93,16 +95,16 @@ App.register = function(e){
 App.login = function(e) {
   e.preventDefault();
   this.$modalcontent.html(`
-    <h2>Login</h2>
-    <form method='post' action='/login'>
+    <div class="logInModal">
+    <form method='post' action='/login' class='logInForm'>
       <div class='form-group'>
         <input class='form-control' type='email' name='email' placeholder='Email'>
       </div>
       <div class='form-group'>
         <input class='form-control' type='password' name='password' placeholder='Password'>
       </div>
-      <input class='btn btn-primary' type='submit' value='Login'>
-    </form>
+      <input class='btn btn-primary logInButton' type='submit' value='Login'>
+    </form></div>
   `);
   this.$modal.modal('show');
 };
@@ -116,7 +118,7 @@ App.logout = function(e){
 App.homePage = function(e) {
   if (e) e.preventDefault();
   console.log('Home page was clicked');
-  this.$modalcontent.html(`<div class="mainImage"><h1>BLOOM</h1></div>`);
+  this.$modalcontent.html(`<div class="mainImage"><h1>Bloom</h1><h6>A GUIDE TO LONDON'S SECRET GARDENS.</h6></div>`);
   this.$modal.modal('show');
 };
 

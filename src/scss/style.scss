@@ -10,8 +10,149 @@ body {
   background-color: blue;
 }
 
-img {
-  width: 190px;
+.bloomIcon {
+  font-family: 'Dawning of a New Day', cursive;
+  font-weight: 900;
+  font-size: 35px;
+  margin: 0 0 0 0;
+  padding: 0px 2px 0px 2px;
+  background-color: rgba(255,105,180,1);
+  color: white;
+}
+
+.signUpNavBarLi {
+  background-color: #FF9BCE;
+  margin: 0px;
+  padding: 0px 4px 0px 4px;
+  height: 52px;
+}
+
+.signUpNavBarA {
+  margin-top: 8px;
+  color: white;
+  font-family: 'Raleway', sans-serif;
+}
+
+.logInNavBarLi {
+  background-color: #FF9BCE;
+  margin: 0px;
+  padding: 0px 4px 0px 4px;
+  height: 52px;
+}
+
+.logInNavBarA {
+  margin-top: 8px;
+  color: white;
+  font-family: 'Raleway', sans-serif;
+}
+
+.navigationBar {
+  background-color: #ebd5ec;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  padding: 0;
+}
+
+// .navBarStyleLeft {
+//   background-color: rgba(255, 155, 206,1);
+// }
+
+.styleModal {
+  background-color: rgba(1,1,1,0);
+  border: none;
+  text-align: center;
+  margin: 50px auto;
+}
+
+.mainImage {
+  margin: 0 auto;
+  text-align: center;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background-color: rgba(255,105,180,1);
+  transition-property: background-color, border-radius;
+  transition-duration: 2s;
+  transition-timing-function: linear, ease;
+  h1 {
+    font-family: 'Dawning of a New Day', cursive;
+    font-size: 100px;
+    font-weight: 800px;
+    transition-property: color, padding-top;
+    transition-duration: 2s;
+    transition-timing-function: linear, ease;
+    // vertical-align: middle;
+    padding-top: 110px;
+    margin-bottom: 0px;
+    color: white;
+  }
+
+  h6 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 4px;
+    transition-property: color, font-size;
+    transition-duration: 2s;
+    transition-timing-function: linear, ease;
+    color: rgba(255,105,180,1);
+  }
+}
+
+.mainImage:hover {
+  border-radius: 0px;
+  background-color: rgba(255, 155, 206,1);
+  h1 {
+    color: #3F293C;
+    text-decoration: underline;
+    padding-top: 80px;
+  }
+  h6 {
+    font-size: 15px;
+    color: #3F293C;
+  }
+}
+
+.logInModal {
+  width: 500px;
+  text-align: center;
+  background-color: rgba(255, 155, 206,1);
+  padding: 5px;
+  margin: 0 auto;
+  font-family: 'Raleway', sans-serif;
+}
+
+.logInForm {
+  width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+  font-family: 'Raleway', sans-serif;
+}
+
+.logInButton {
+  border: 2px solid white;
+  background-color: rgba(1,1,1,0);
+  transition-property: background-color;
+  transition-duration: 1s;
+  transition-timing-function: linear, ease;
+}
+
+.logInButton:hover {
+  background-color: #FF9BCE;
+}
+
+.signInModal {
+  width: 500px;
+  text-align: center;
+  background-color: rgba(255, 155, 206,1);
+  padding: 5px;
+  margin: 0 auto;
+  font-family: 'Raleway', sans-serif;
+}
+
+.signInForm {
+  width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+  font-family: 'Raleway', sans-serif;
 }
 
 .infoWindow {
@@ -24,32 +165,4 @@ img {
   background-color: #facade;
   color: white;
   border-radius: 2px 2px 0 0;
-}
-
-.styleModal {
-  background-color: #ffadc6;
-  text-align: center;
-}
-
-.keyLogoNav {
-  width: 100px;
-}
-
-.keyLogoHome {
-  margin: 0 auto;
-}
-
-.mainImage {
-  font-family: monospace;
-  h1 {
-    font-size: 100px;
-    font-weight: 800px;
-  }
-
-  h1:hover {
-    color: white;
-    font-style: italic;
-    text-decoration: underline;
-    margin: 20px;
-  }
 }
