@@ -15,10 +15,10 @@ App.init = function() {
   $('.logout').on('click', this.logout.bind(this));
   $('.homePage').on('click', this.homePage.bind(this));
   $('#gardens').on('click', this.showMapAgain.bind(this));
-  $('#addGarden').on('click', this.addGarden.bind(this));
+  // $('#addGarden').on('click', this.addGarden.bind(this));
   $('.userGardens').on('click', this.userGarden.bind(this));
   $('#secretGardens').on('click', this.showMapSecret.bind(this));
-  $('.editGarden').on('click', this.editGarden.bind(this));
+  $('body').on('click', '.editGarden', this.editGarden.bind(this));
   // $('.deleteGarden').on('click', this.deleteGarden.bind(this));
   this.$modal.on('submit', 'form', this.handleForm);
   // instead of the above add in modal content
@@ -145,6 +145,7 @@ App.showMapAgain = function(e){
     center: new google.maps.LatLng(51.506178,-0.088369),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
+    disableDoubleClickZoom: true,
     mapTypeControlOptions: {
       mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
         'styled_map']
@@ -162,6 +163,13 @@ App.showMapAgain = function(e){
   App.map = new google.maps.Map(canvas, mapOptions);
   App.map.mapTypes.set('styled_map', styledMapType);
   App.map.setMapTypeId('styled_map');
+
+  App.map.addListener('dblclick', function(e) {
+    const coords = e.latLng;
+
+    App.addGarden.bind(App)(coords);
+  });
+
   App.getGardens();
 };
 
@@ -266,8 +274,7 @@ App.createMarkerForGardenSecret = function(garden) {
   this.addInfoWindowForGarden(garden, marker);
 };
 
-App.addGarden = function(e) {
-  if (e) e.preventDefault();
+App.addGarden = function(coords) {
   console.log('Add a garden was clicked');
   this.$modalcontent.html(`
     <h2>Add a garden</h2>
@@ -282,10 +289,10 @@ App.addGarden = function(e) {
         <input class='form-control' type='text' name='garden[image]' placeholder='Image'>
       </div>
       <div class='form-group'>
-        <input class='form-control' type='text' name='garden[lat]' placeholder='Garden latitude'>
+        <input class='form-control' type='text' name='garden[lat]' placeholder='Garden latitude' value="${coords.lat()}">
       </div>
       <div class='form-group'>
-        <input class='form-control' type='text' name='garden[lng]' placeholder='Garden Longitude'>
+        <input class='form-control' type='text' name='garden[lng]' placeholder='Garden Longitude' value="${coords.lng()}">
       </div>
       <input class='btn btn-primary' type='submit' value='Add Garden'>
     </form>
@@ -321,6 +328,27 @@ App.userGarden = function(e) {
 App.editGarden = function(e) {
   if (e) e.preventDefault();
   console.log('edit garden was clicked');
+  this.$modalcontent.html(`
+    <h2>Edit garden</h2>
+    <form method='put' action='/gardens/:id'>
+      <div class='form-group'>
+        <input class='form-control' type='text' name='garden[name]' placeholder='Garden Name'>
+      </div>
+      <div class='form-group'>
+        <input class='form-control' type='text' name='garden[description]' placeholder='Description'>
+      </div>
+      <div class='form-group'>
+        <input class='form-control' type='text' name='garden[image]' placeholder='Image'>
+      </div>
+      <div class='form-group'>
+        <input class='form-control' type='text' name='garden[lat]' placeholder='Garden latitude'>
+      </div>
+      <div class='form-group'>
+        <input class='form-control' type='text' name='garden[lng]' placeholder='Garden Longitude'>
+      </div>
+      <input class='btn btn-primary' type='submit' value='Edit Garden'>
+    </form>
+  `);
 };
 
 // App.editGardens = function(e) {
