@@ -7,9 +7,9 @@ App.init = function() {
 
   $('#time').text(date);
   this.$main  = $('main');
-  App.showMap();
   this.$modalcontent = $('.modal-content');
   this.$modal = $('.modal');
+  App.showMap();
   $('.register').on('click', this.register.bind(this));
   $('.login').on('click', this.login.bind(this));
   $('.logout').on('click', this.logout.bind(this));
@@ -185,8 +185,33 @@ App.createMarkerForGarden = function(garden) {
     map: App.map,
     animation: google.maps.Animation.DROP
   });
-  this.getWeatherInfo(garden);
-  this.addInfoWindowForGarden(garden, marker);
+  this.getWeatherInfo(garden, marker);
+};
+
+App.getWeatherInfo = function(garden, marker) {
+  console.log(marker);
+  $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&APPID=a7960494b38d3fe6fb56a4880fc25bc8`).done(data => {
+    const temp = data.list[0].main.temp;
+    const weather = data.list[0].weather[0].description;
+    console.log(data);
+    console.log(temp, weather);
+    this.addInfoWindowForGarden(garden, marker, weather, temp);
+  });
+};
+
+App.addInfoWindowForGarden = function(garden, marker, weather, temp) {
+  google.maps.event.addListener(marker, 'click', () => {
+    if (typeof this.infoWindow !== 'undefined') this.infoWindow.close();
+
+    this.infoWindow = new google.maps.InfoWindow({
+      content: `<div class='infoWindow'><header class = 'infoWindowHeader'><h4>${ garden.name}</h4></header><img src='${garden.image}'></img><p>${garden.description }</p><p>${weather}, ${temp}</p></div>`,
+      maxWidth: '260'
+    });
+
+    this.infoWindow.open(this.map, marker);
+    this.map.setCenter(marker.getPosition());
+    this.map.setZoom(15);
+  });
 };
 
 App.showMapSecret = function(e){
@@ -239,30 +264,6 @@ App.createMarkerForGardenSecret = function(garden) {
   });
   this.getWeatherInfo(garden);
   this.addInfoWindowForGarden(garden, marker);
-};
-
-App.getWeatherInfo = function(garden) {
-  $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&APPID=a7960494b38d3fe6fb56a4880fc25bc8`).done(data => {
-    const temp = data.list[0].main.temp;
-    const weather = data.list[0].weather[0].description;
-    console.log(data);
-    console.log(temp, weather);
-  });
-};
-
-App.addInfoWindowForGarden = function(garden, marker) {
-  google.maps.event.addListener(marker, 'click', () => {
-    if (typeof this.infoWindow !== 'undefined') this.infoWindow.close();
-
-    this.infoWindow = new google.maps.InfoWindow({
-      content: `<div class='infoWindow'><header class = 'infoWindowHeader'><h4>${ garden.name}</h4></header><img src='${garden.image}'></img><p>${garden.description }</p></div>`,
-      maxWidth: '260'
-    });
-
-    this.infoWindow.open(this.map, marker);
-    this.map.setCenter(marker.getPosition());
-    this.map.setZoom(15);
-  });
 };
 
 App.addGarden = function(e) {
