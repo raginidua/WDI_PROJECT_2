@@ -18,7 +18,7 @@ App.init = function() {
   $('#addGarden').on('click', this.addGarden.bind(this));
   $('.userGardens').on('click', this.userGarden.bind(this));
   $('#secretGardens').on('click', this.showMapSecret.bind(this));
-  // $('.editGarden').on('click', this.editGarden.bind(this));
+  $('.editGarden').on('click', this.editGarden.bind(this));
   // $('.deleteGarden').on('click', this.deleteGarden.bind(this));
   this.$modal.on('submit', 'form', this.handleForm);
   // instead of the above add in modal content
@@ -52,23 +52,23 @@ App.register = function(e){
   if (e) e.preventDefault();
   this.$modalcontent.html(`
     <h2>Sign Up</h2>
-    <form method="post" action="/register">
-      <div class="form-group">
-        <input class="form-control" type="text" name="user[firstName]" placeholder="First name">
+    <form method='post' action='/register'>
+      <div class='form-group'>
+        <input class='form-control' type='text' name='user[firstName]' placeholder='First name'>
       </div>
-      <div class="form-group">
-        <input class="form-control" type="text" name="user[lastName]" placeholder="Last name">
+      <div class='form-group'>
+        <input class='form-control' type='text' name='user[lastName]' placeholder='Last name'>
       </div>
-      <div class="form-group">
-        <input class="form-control" type="email" name="user[email]" placeholder="Email">
+      <div class='form-group'>
+        <input class='form-control' type='email' name='user[email]' placeholder='Email'>
       </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="user[password]" placeholder="Password">
+      <div class='form-group'>
+        <input class='form-control' type='password' name='user[password]' placeholder='Password'>
       </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="user[passwordConfirmation]" placeholder="Password Confirmation">
+      <div class='form-group'>
+        <input class='form-control' type='password' name='user[passwordConfirmation]' placeholder='Password Confirmation'>
       </div>
-      <input class="btn btn-primary" type="submit" value="Register">
+      <input class='btn btn-primary' type='submit' value='Register'>
     </form>
   `);
   this.$modal.modal('show');
@@ -78,14 +78,14 @@ App.login = function(e) {
   e.preventDefault();
   this.$modalcontent.html(`
     <h2>Login</h2>
-    <form method="post" action="/login">
-      <div class="form-group">
-        <input class="form-control" type="email" name="email" placeholder="Email">
+    <form method='post' action='/login'>
+      <div class='form-group'>
+        <input class='form-control' type='email' name='email' placeholder='Email'>
       </div>
-      <div class="form-group">
-        <input class="form-control" type="password" name="password" placeholder="Password">
+      <div class='form-group'>
+        <input class='form-control' type='password' name='password' placeholder='Password'>
       </div>
-      <input class="btn btn-primary" type="submit" value="Login">
+      <input class='btn btn-primary' type='submit' value='Login'>
     </form>
   `);
   this.$modal.modal('show');
@@ -107,13 +107,18 @@ App.homePage = function(e) {
 App.showMap = function(e){
   if (e) e.preventDefault();
   console.log('Gardens was clicked');
-  this.$main.html(`<div id="map-canvas"></div>`);
+  this.$main.html(`<div id='map-canvas'></div>`);
+  const styledMapType = new google.maps.StyledMapType([{'featureType': 'administrative','elementType': 'labels.text.fill','stylers': [{'color': '#444444'}]},{'featureType': 'landscape','elementType': 'all','stylers': [{'color': '#f2f2f2'}]},{'featureType': 'poi','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'road','elementType': 'all','stylers': [{'saturation': -100},{'lightness': 45}]},{'featureType': 'road.highway','elementType': 'all','stylers': [{'visibility': 'simplified'}]},{'featureType': 'road.arterial','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'water','elementType': 'all','stylers': [{'color': '#ebd5ec'},{'visibility': 'on'}]}]);
   const canvas = document.getElementById('map-canvas');
   const mapOptions = {
     zoom: 12,
     center: new google.maps.LatLng(51.506178,-0.088369),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
+    mapTypeControlOptions: {
+      mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+        'styled_map']
+    },
     zoomControl: true,
     zoomControlOptions: {
       position: google.maps.ControlPosition.LEFT_CENTER
@@ -125,18 +130,25 @@ App.showMap = function(e){
     }
   };
   App.map = new google.maps.Map(canvas, mapOptions);
+  App.map.mapTypes.set('styled_map', styledMapType);
+  App.map.setMapTypeId('styled_map');
 };
 
 App.showMapAgain = function(e){
   if (e) e.preventDefault();
   console.log('Gardens was clicked');
-  this.$main.html(`<div id="map-canvas"></div>`);
+  this.$main.html(`<div id='map-canvas'></div>`);
+  const styledMapType = new google.maps.StyledMapType([{'featureType': 'administrative','elementType': 'geometry.fill','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'geometry.stroke','stylers': [{'visibility': 'on'}]},{'featureType': 'administrative','elementType': 'labels.text.fill','stylers': [{'color': '#495421'}]},{'featureType': 'administrative','elementType': 'labels.text.stroke','stylers': [{'visibility': 'on'},{'weight': 4.1}]},{'featureType': 'landscape','elementType': 'geometry.fill','stylers': [{'color': '#daebc6'},{'visibility': 'on'}]},{'featureType': 'landscape.natural.terrain','elementType': 'geometry.fill','stylers': [{'color': '#cae9c2'}]},{'featureType': 'poi','elementType': 'geometry.fill','stylers': [{'color': '#769E72'}]},{'featureType': 'poi','elementType': 'labels.text.fill','stylers': [{'color': '#7B8758'}]},{'featureType': 'poi','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'poi.park','elementType': 'geometry','stylers': [{'visibility': 'simplified'},{'color': '#89d88f'}]},{'featureType': 'road','elementType': 'geometry.fill','stylers': [{'color': '#ff0000'}]},{'featureType': 'road','elementType': 'labels.text.fill','stylers': [{'color': '#459945'}]},{'featureType': 'road','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'road','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'road.highway','elementType': 'geometry','stylers': [{'color': '#ffffff'}]},{'featureType': 'road.arterial','elementType': 'geometry','stylers': [{'color': '#eeeeee'}]},{'featureType': 'road.local','elementType': 'geometry','stylers': [{'color': '#d8d8d8'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'water','elementType': 'geometry','stylers': [{'visibility': 'on'},{'color': '#d2f0ef'}]}]);
   const canvas = document.getElementById('map-canvas');
   const mapOptions = {
     zoom: 12,
     center: new google.maps.LatLng(51.506178,-0.088369),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
+    mapTypeControlOptions: {
+      mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+        'styled_map']
+    },
     zoomControl: true,
     zoomControlOptions: {
       position: google.maps.ControlPosition.LEFT_CENTER
@@ -148,6 +160,8 @@ App.showMapAgain = function(e){
     }
   };
   App.map = new google.maps.Map(canvas, mapOptions);
+  App.map.mapTypes.set('styled_map', styledMapType);
+  App.map.setMapTypeId('styled_map');
   App.getGardens();
 };
 
@@ -178,7 +192,7 @@ App.createMarkerForGarden = function(garden) {
 App.showMapSecret = function(e){
   if (e) e.preventDefault();
   console.log('Gardens was clicked');
-  this.$main.html(`<div id="map-canvas"></div>`);
+  this.$main.html(`<div id='map-canvas'></div>`);
   const canvas = document.getElementById('map-canvas');
   const mapOptions = {
     zoom: 12,
@@ -241,7 +255,7 @@ App.addInfoWindowForGarden = function(garden, marker) {
     if (typeof this.infoWindow !== 'undefined') this.infoWindow.close();
 
     this.infoWindow = new google.maps.InfoWindow({
-      content: `<div class="infoWindow"><header class = "infoWindowHeader"><h4>${ garden.name}</h4></header><img src="${garden.image}"></img><p>${garden.description }</p></div>`,
+      content: `<div class='infoWindow'><header class = 'infoWindowHeader'><h4>${ garden.name}</h4></header><img src='${garden.image}'></img><p>${garden.description }</p></div>`,
       maxWidth: '260'
     });
 
@@ -256,23 +270,23 @@ App.addGarden = function(e) {
   console.log('Add a garden was clicked');
   this.$modalcontent.html(`
     <h2>Add a garden</h2>
-    <form method="post" action="/gardens">
-      <div class="form-group">
-        <input class="form-control" type="text" name="garden[name]" placeholder="Garden Name">
+    <form method='post' action='/gardens'>
+      <div class='form-group'>
+        <input class='form-control' type='text' name='garden[name]' placeholder='Garden Name'>
       </div>
-      <div class="form-group">
-        <input class="form-control" type="text" name="garden[description]" placeholder="Description">
+      <div class='form-group'>
+        <input class='form-control' type='text' name='garden[description]' placeholder='Description'>
       </div>
-      <div class="form-group">
-        <input class="form-control" type="text" name="garden[image]" placeholder="Image">
+      <div class='form-group'>
+        <input class='form-control' type='text' name='garden[image]' placeholder='Image'>
       </div>
-      <div class="form-group">
-        <input class="form-control" type="text" name="garden[lat]" placeholder="Garden latitude">
+      <div class='form-group'>
+        <input class='form-control' type='text' name='garden[lat]' placeholder='Garden latitude'>
       </div>
-      <div class="form-group">
-        <input class="form-control" type="text" name="garden[lng]" placeholder="Garden Longitude">
+      <div class='form-group'>
+        <input class='form-control' type='text' name='garden[lng]' placeholder='Garden Longitude'>
       </div>
-      <input class="btn btn-primary" type="submit" value="Add Garden">
+      <input class='btn btn-primary' type='submit' value='Add Garden'>
     </form>
   `);
   this.$modal.modal('show');
@@ -293,8 +307,8 @@ App.userGarden = function(e) {
           console.log(garden.name);
           this.$modalcontent.append(`
             <li>${garden.name}</li>
-            <input class="btn btn-primary editGarden" type="submit" value="Edit Garden">
-            <input class="btn btn-primary deleteGarden" type="submit" value="Delete Garden">
+            <input class='btn btn-primary editGarden' type='submit' value='Edit Garden'>
+            <input class='btn btn-primary deleteGarden' type='submit' value='Delete Garden'>
           `);
           this.$modal.modal('show');
         }
@@ -314,23 +328,23 @@ App.editGarden = function(e) {
   // this.$modal.modal('hide');
   // this.$modalcontent.html(`
   //   <h2>Edit garden</h2>
-  //   <form method="put" action="/gardens/:id">
-  //     <div class="form-group">
-  //       <input class="form-control" type="text" name="garden[name]" placeholder="Garden Name">
+  //   <form method='put' action='/gardens/:id'>
+  //     <div class='form-group'>
+  //       <input class='form-control' type='text' name='garden[name]' placeholder='Garden Name'>
   //     </div>
-  //     <div class="form-group">
-  //       <input class="form-control" type="text" name="garden[description]" placeholder="Description">
+  //     <div class='form-group'>
+  //       <input class='form-control' type='text' name='garden[description]' placeholder='Description'>
   //     </div>
-  //     <div class="form-group">
-  //       <input class="form-control" type="text" name="garden[image]" placeholder="Image">
+  //     <div class='form-group'>
+  //       <input class='form-control' type='text' name='garden[image]' placeholder='Image'>
   //     </div>
-  //     <div class="form-group">
-  //       <input class="form-control" type="text" name="garden[lat]" placeholder="Garden latitude">
+  //     <div class='form-group'>
+  //       <input class='form-control' type='text' name='garden[lat]' placeholder='Garden latitude'>
   //     </div>
-  //     <div class="form-group">
-  //       <input class="form-control" type="text" name="garden[lng]" placeholder="Garden Longitude">
+  //     <div class='form-group'>
+  //       <input class='form-control' type='text' name='garden[lng]' placeholder='Garden Longitude'>
   //     </div>
-  //     <input class="btn btn-primary" type="submit" value="Edit Garden">
+  //     <input class='btn btn-primary' type='submit' value='Edit Garden'>
   //   </form>
   // `);
 // };
@@ -381,9 +395,9 @@ App.currentUser = function() {
     const payload = token.split('.')[1];
     const userId  = JSON.parse(window.atob(payload)).id;
     this.ajaxRequest(`${this.apiUrl}/users/${userId}`, 'get', null, data => {
-      $('.navbar-nav').append(`
-        <li class="nav-item loggedIn helloUser">
-          <a class="nav-link" href="#">Hello ${data.user.firstName}</a>
+      $('.navbar-right').append(`
+        <li class='nav-item loggedIn helloUser'>
+          <a class='nav-link' href='#'>Hello ${data.user.firstName}</a>
         </li>`);
     });
   }
