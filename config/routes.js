@@ -22,6 +22,7 @@ router.route('/gardens')
   .post(gardens.create);
 
 router.route('/gardens/:id')
+  .get(gardens.show)
   .put(gardens.update)
   .delete(gardens.delete);
 

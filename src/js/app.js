@@ -4,8 +4,26 @@ const google = google;
 App.init = function() {
   this.apiUrl = 'http://localhost:3000/api';
   const date = new Date().toLocaleString();
-
+  console.log(date);
   $('#time').text(date);
+
+  App.getWeatherTimes = function() {
+    console.log('Get weather timesg logging');
+    $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=51.5074&lon=0.1278&mode=JSON&APPID=a7960494b38d3fe6fb56a4880fc25bc8`).done(data => {
+      $.each(data.list, (index, time) => {
+        console.log(data);
+        console.log(time.dt_txt);
+        $('.weatherTimes').append(`<option>${time.dt_txt}</option>`);
+        $(`.${time.dt}`).on('click', function() {
+          console.log(time);
+        });
+      });
+    });
+  };
+
+  App.getWeatherTimes();
+
+  $('.currentTime').text(date);
   this.$main  = $('main');
   this.$modalcontent = $('.modal-content');
   this.$modal = $('.modal');
@@ -15,13 +33,11 @@ App.init = function() {
   $('.logout').on('click', this.logout.bind(this));
   $('.homePage').on('click', this.homePage.bind(this));
   $('#gardens').on('click', this.showMapAgain.bind(this));
-  // $('#addGarden').on('click', this.addGarden.bind(this));
   $('.userGardens').on('click', this.userGarden.bind(this));
   $('#secretGardens').on('click', this.showMapSecret.bind(this));
   $('body').on('click', '.editGarden', this.editGarden.bind(this));
   // $('.deleteGarden').on('click', this.deleteGarden.bind(this));
   this.$modal.on('submit', 'form', this.handleForm);
-  // instead of the above add in modal content
 
   if (this.getToken()) {
     this.loggedInState();
@@ -45,7 +61,7 @@ App.loggedOutState = function(){
 };
 
 App.loggedOut = function() {
-  this.$main.html(`<h1>Welcome to KEY: unlocking the door to London's Secret Gardens</h1>`);
+  this.$main.html(`<h1>BLOOM</h1>`);
 };
 
 App.register = function(e){
@@ -100,7 +116,7 @@ App.logout = function(e){
 App.homePage = function(e) {
   if (e) e.preventDefault();
   console.log('Home page was clicked');
-  this.$modalcontent.html(`<h1>Welcome to KEY: unlocking the door to London's Secret Gardens</h1>`);
+  this.$modalcontent.html(`<div class="mainImage"><h1>BLOOM</h1></div>`);
   this.$modal.modal('show');
 };
 
@@ -136,6 +152,7 @@ App.showMap = function(e){
 
 App.showMapAgain = function(e){
   if (e) e.preventDefault();
+  console.log();
   console.log('Gardens was clicked');
   this.$main.html(`<div id='map-canvas'></div>`);
   const styledMapType = new google.maps.StyledMapType([{'featureType': 'administrative','elementType': 'geometry.fill','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'geometry.stroke','stylers': [{'visibility': 'on'}]},{'featureType': 'administrative','elementType': 'labels.text.fill','stylers': [{'color': '#495421'}]},{'featureType': 'administrative','elementType': 'labels.text.stroke','stylers': [{'visibility': 'on'},{'weight': 4.1}]},{'featureType': 'landscape','elementType': 'geometry.fill','stylers': [{'color': '#daebc6'},{'visibility': 'on'}]},{'featureType': 'landscape.natural.terrain','elementType': 'geometry.fill','stylers': [{'color': '#cae9c2'}]},{'featureType': 'poi','elementType': 'geometry.fill','stylers': [{'color': '#769E72'}]},{'featureType': 'poi','elementType': 'labels.text.fill','stylers': [{'color': '#7B8758'}]},{'featureType': 'poi','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'poi.park','elementType': 'geometry','stylers': [{'visibility': 'simplified'},{'color': '#89d88f'}]},{'featureType': 'road','elementType': 'geometry.fill','stylers': [{'color': '#ff0000'}]},{'featureType': 'road','elementType': 'labels.text.fill','stylers': [{'color': '#459945'}]},{'featureType': 'road','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'road','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'road.highway','elementType': 'geometry','stylers': [{'color': '#ffffff'}]},{'featureType': 'road.arterial','elementType': 'geometry','stylers': [{'color': '#eeeeee'}]},{'featureType': 'road.local','elementType': 'geometry','stylers': [{'color': '#d8d8d8'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'water','elementType': 'geometry','stylers': [{'visibility': 'on'},{'color': '#d2f0ef'}]}]);
@@ -193,15 +210,18 @@ App.createMarkerForGarden = function(garden) {
     map: App.map,
     animation: google.maps.Animation.DROP
   });
+  // this.getWeatherTimes(garden, marker);
   this.getWeatherInfo(garden, marker);
 };
 
 App.getWeatherInfo = function(garden, marker) {
   console.log(marker);
-  $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&APPID=a7960494b38d3fe6fb56a4880fc25bc8`).done(data => {
+  $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&&units=metric&APPID=a7960494b38d3fe6fb56a4880fc25bc8`).done(data => {
     const temp = data.list[0].main.temp;
     const weather = data.list[0].weather[0].description;
+    const date = data.dt_text;
     console.log(data);
+    console.log(date);
     console.log(temp, weather);
     this.addInfoWindowForGarden(garden, marker, weather, temp);
   });
@@ -309,15 +329,16 @@ App.userGarden = function(e) {
     const userId  = JSON.parse(window.atob(payload)).id;
     console.log(userId);
     this.ajaxRequest(`${this.apiUrl}/gardens`, 'get', null, (data) => {
-      this.$modalcontent.html('<ul></ul>');
+      this.$modalcontent.html('<ul>');
       $.each(data.gardens, (index, garden) => {
         if (userId === garden.user) {
-          console.log(garden.name);
+          console.log(garden);
           this.$modalcontent.append(`
             <li>${garden.name}</li>
-            <input class='btn btn-primary editGarden' type='submit' value='Edit Garden'>
-            <input class='btn btn-primary deleteGarden' type='submit' value='Delete Garden'>
+            <input data-identifier="${garden._id}" class='btn btn-primary editGarden' type='submit' value='Edit Garden'>
+            <form method='delete' action='/gardens/${garden._id}'><input class='btn btn-primary deleteGarden' type='submit' value='Delete Garden'></form>
           `);
+          this.$modalcontent.append('</ul>');
           this.$modal.modal('show');
         }
       });
@@ -328,56 +349,31 @@ App.userGarden = function(e) {
 App.editGarden = function(e) {
   if (e) e.preventDefault();
   console.log('edit garden was clicked');
-  this.$modalcontent.html(`
-    <h2>Edit garden</h2>
-    <form method='put' action='/gardens/:id'>
-      <div class='form-group'>
-        <input class='form-control' type='text' name='garden[name]' placeholder='Garden Name'>
-      </div>
-      <div class='form-group'>
-        <input class='form-control' type='text' name='garden[description]' placeholder='Description'>
-      </div>
-      <div class='form-group'>
-        <input class='form-control' type='text' name='garden[image]' placeholder='Image'>
-      </div>
-      <div class='form-group'>
-        <input class='form-control' type='text' name='garden[lat]' placeholder='Garden latitude'>
-      </div>
-      <div class='form-group'>
-        <input class='form-control' type='text' name='garden[lng]' placeholder='Garden Longitude'>
-      </div>
-      <input class='btn btn-primary' type='submit' value='Edit Garden'>
-    </form>
-  `);
+  this.ajaxRequest(`${this.apiUrl}/gardens/${e.target.getAttribute('data-identifier')}`, 'get', null, (data) => {
+    App.$modalcontent.html(`
+      <h2>Edit garden</h2>
+      <form method='post' action='/gardens/${data.garden._id}'>
+        <input type="hidden" name="_method" value="put">
+        <div class='form-group'>
+          <input class='form-control' type='text' name='garden[name]' value='${data.garden.name}'>
+        </div>
+        <div class='form-group'>
+          <input class='form-control' type='text' name='garden[description]' value='${data.garden.description}'>
+        </div>
+        <div class='form-group'>
+          <input class='form-control' type='text' name='garden[image]' value='${data.garden.image}>'
+        </div>
+        <div class='form-group'>
+          <input class='form-control' type='text' name='garden[lat]' value='${data.garden.lat}>'
+        </div>
+        <div class='form-group'>
+          <input class='form-control' type='text' name='garden[lng]' value='${data.garden.lng}'>
+        </div>
+        <input class='btn btn-primary' type='submit' value='Edit Garden'>
+      </form>
+    `);
+  });
 };
-
-// App.editGardens = function(e) {
-//   if (e) e.preventDefault();
-//   console.log('Edit garden was clicked');
-  // this.$modal.modal('hide');
-  // this.$modalcontent.html(`
-  //   <h2>Edit garden</h2>
-  //   <form method='put' action='/gardens/:id'>
-  //     <div class='form-group'>
-  //       <input class='form-control' type='text' name='garden[name]' placeholder='Garden Name'>
-  //     </div>
-  //     <div class='form-group'>
-  //       <input class='form-control' type='text' name='garden[description]' placeholder='Description'>
-  //     </div>
-  //     <div class='form-group'>
-  //       <input class='form-control' type='text' name='garden[image]' placeholder='Image'>
-  //     </div>
-  //     <div class='form-group'>
-  //       <input class='form-control' type='text' name='garden[lat]' placeholder='Garden latitude'>
-  //     </div>
-  //     <div class='form-group'>
-  //       <input class='form-control' type='text' name='garden[lng]' placeholder='Garden Longitude'>
-  //     </div>
-  //     <input class='btn btn-primary' type='submit' value='Edit Garden'>
-  //   </form>
-  // `);
-// };
-
 
 App.handleForm = function(e){
   e.preventDefault();

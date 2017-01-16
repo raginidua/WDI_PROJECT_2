@@ -26,13 +26,30 @@ img {
   border-radius: 2px 2px 0 0;
 }
 
-// .modal {
-//   background-color: #A2708A;
-//   width: 400px;
-//   height: 250px;
-//   margin: 130px auto 0px auto;
-// }
+.styleModal {
+  background-color: #ffadc6;
+  text-align: center;
+}
 
 .keyLogoNav {
   width: 100px;
+}
+
+.keyLogoHome {
+  margin: 0 auto;
+}
+
+.mainImage {
+  font-family: monospace;
+  h1 {
+    font-size: 100px;
+    font-weight: 800px;
+  }
+
+  h1:hover {
+    color: white;
+    font-style: italic;
+    text-decoration: underline;
+    margin: 20px;
+  }
 }
