@@ -7,7 +7,10 @@ body {
   width: 100%;
   height: 100vh;
   margin: 0 auto;
-  background-color: blue;
+}
+
+img {
+  width: 190px
 }
 
 .bloomIcon {
@@ -21,7 +24,6 @@ body {
 }
 
 .signUpNavBarLi {
-  background-color: #FF9BCE;
   margin: 0px;
   padding: 0px 4px 0px 4px;
   height: 52px;
@@ -34,7 +36,6 @@ body {
 }
 
 .logInNavBarLi {
-  background-color: #FF9BCE;
   margin: 0px;
   padding: 0px 4px 0px 4px;
   height: 52px;
@@ -47,15 +48,12 @@ body {
 }
 
 .navigationBar {
-  background-color: #ebd5ec;
+  background-color: rgba(255, 155, 206,1);
   border-top: 2px solid black;
   border-bottom: 2px solid black;
   padding: 0;
 }
 
-// .navBarStyleLeft {
-//   background-color: rgba(255, 155, 206,1);
-// }
 
 .styleModal {
   background-color: rgba(1,1,1,0);
@@ -95,10 +93,19 @@ body {
     transition-timing-function: linear, ease;
     color: rgba(255,105,180,1);
   }
+
+  p {
+    font-family: 'Raleway', sans-serif;
+    font-size: 3px;
+    transition-property: color, font-size;
+    transition-duration: 2s;
+    transition-timing-function: linear, ease;
+    color: rgba(255,105,180,1);
+  }
 }
 
 .mainImage:hover {
-  border-radius: 0px;
+  border-radius: 5px;
   background-color: rgba(255, 155, 206,1);
   h1 {
     color: #3F293C;
@@ -107,6 +114,10 @@ body {
   }
   h6 {
     font-size: 15px;
+    color: #3F293C;
+  }
+  p {
+    font-size: 12px;
     color: #3F293C;
   }
 }
@@ -118,6 +129,17 @@ body {
   padding: 5px;
   margin: 0 auto;
   font-family: 'Raleway', sans-serif;
+  border-radius: 5px;
+}
+
+.addGardenModal {
+  width: 500px;
+  text-align: center;
+  background-color: #56876D;
+  padding: 5px;
+  margin: 0 auto;
+  font-family: 'Raleway', sans-serif;
+  border-radius: 5px;
 }
 
 .logInForm {
@@ -136,7 +158,7 @@ body {
 }
 
 .logInButton:hover {
-  background-color: #FF9BCE;
+  background-color: rgba(255,105,180,1);
 }
 
 .signInModal {
@@ -145,6 +167,7 @@ body {
   background-color: rgba(255, 155, 206,1);
   padding: 5px;
   margin: 0 auto;
+  border-radius: 5px;
   font-family: 'Raleway', sans-serif;
 }
 
@@ -165,4 +188,37 @@ body {
   background-color: #facade;
   color: white;
   border-radius: 2px 2px 0 0;
+}
+
+.rightSide {
+  position: absolute;
+  right: 170px;
+}
+
+.rightSide2 {
+  position: absolute;
+  right: 50px;
+}
+
+.helloUser {
+  background-color: #56876D;
+}
+
+.userGardenModal {
+  width: 500px;
+  background-color: #56876D;
+  ul {
+    width: 500px;
+  }
+}
+
+.editGardenModal {
+  width: 500px;
+  background-color: #56876D;
+}
+
+.modal-content {
+  ul li {
+    list-style-type: none;
+  }
 }

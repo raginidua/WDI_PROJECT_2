@@ -3,7 +3,11 @@ const google = google;
 
 App.init = function() {
   this.apiUrl = 'http://localhost:3000/api';
-  const date = new Date().toLocaleString();
+  const options = {
+    weekday: 'short', year: 'numeric', month: 'short',
+    day: 'numeric', hour: '2-digit', minute: '2-digit'
+  };
+  const date = new Date().toLocaleTimeString('en-us', options);
   console.log(date);
   $('#time').text(date);
 
@@ -47,14 +51,18 @@ App.init = function() {
 };
 
 App.loggedInState = function(){
+  $('.navigationBar').css('background-color', '#40D083');
+  $('.bloomIcon').css('background-color', '#56876D');
   $('.loggedIn').show();
   $('.loggedOut').hide();
-  this.homePage();
+  App.showMapLoggedIn();
   $('.helloUser').hide();
   this.currentUser();
 };
 
 App.loggedOutState = function(){
+  $('.navigationBar').css('background-color', 'rgba(255, 155, 206,1)');
+  $('.bloomIcon').css('background-color', 'rgba(255,105,180,1)');
   $('.loggedIn').hide();
   $('.loggedOut').show();
   this.showMap();
@@ -67,7 +75,7 @@ App.loggedOut = function() {
 App.register = function(e){
   if (e) e.preventDefault();
   this.$modalcontent.html(`
-    <div class="signInModal">
+    <div class='signInModal'>
     <h2>Sign Up</h2>
     <form method='post' action='/register' class='signInForm'>
       <div class='form-group'>
@@ -85,7 +93,7 @@ App.register = function(e){
       <div class='form-group'>
         <input class='form-control' type='password' name='user[passwordConfirmation]' placeholder='Password Confirmation'>
       </div>
-      <input class='btn btn-primary' type='submit' value='Register'>
+      <input class='btn btn-primary logInButton' type='submit' value='Register'>
     </form>
     </div>
   `);
@@ -95,7 +103,7 @@ App.register = function(e){
 App.login = function(e) {
   e.preventDefault();
   this.$modalcontent.html(`
-    <div class="logInModal">
+    <div class='logInModal'>
     <form method='post' action='/login' class='logInForm'>
       <div class='form-group'>
         <input class='form-control' type='email' name='email' placeholder='Email'>
@@ -118,7 +126,7 @@ App.logout = function(e){
 App.homePage = function(e) {
   if (e) e.preventDefault();
   console.log('Home page was clicked');
-  this.$modalcontent.html(`<div class="mainImage"><h1>Bloom</h1><h6>A GUIDE TO LONDON'S SECRET GARDENS.</h6></div>`);
+  this.$modalcontent.html(`<div class='mainImage'><h1>Bloom</h1><h6>A GUIDE TO LONDON'S SECRET GARDENS.</h6><p>LOG IN OR SIGN UP</p></div>`);
   this.$modal.modal('show');
 };
 
@@ -127,6 +135,36 @@ App.showMap = function(e){
   console.log('Gardens was clicked');
   this.$main.html(`<div id='map-canvas'></div>`);
   const styledMapType = new google.maps.StyledMapType([{'featureType': 'administrative','elementType': 'labels.text.fill','stylers': [{'color': '#444444'}]},{'featureType': 'landscape','elementType': 'all','stylers': [{'color': '#f2f2f2'}]},{'featureType': 'poi','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'road','elementType': 'all','stylers': [{'saturation': -100},{'lightness': 45}]},{'featureType': 'road.highway','elementType': 'all','stylers': [{'visibility': 'simplified'}]},{'featureType': 'road.arterial','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'water','elementType': 'all','stylers': [{'color': '#ebd5ec'},{'visibility': 'on'}]}]);
+  const canvas = document.getElementById('map-canvas');
+  const mapOptions = {
+    zoom: 12,
+    center: new google.maps.LatLng(51.506178,-0.088369),
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControl: false,
+    mapTypeControlOptions: {
+      mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+        'styled_map']
+    },
+    zoomControl: true,
+    zoomControlOptions: {
+      position: google.maps.ControlPosition.LEFT_CENTER
+    },
+    scaleControl: true,
+    streetViewControl: true,
+    streetViewControlOptions: {
+      position: google.maps.ControlPosition.LEFT_TOP
+    }
+  };
+  App.map = new google.maps.Map(canvas, mapOptions);
+  App.map.mapTypes.set('styled_map', styledMapType);
+  App.map.setMapTypeId('styled_map');
+};
+
+App.showMapLoggedIn = function(e){
+  if (e) e.preventDefault();
+  console.log('Gardens was clicked');
+  this.$main.html(`<div id='map-canvas'></div>`);
+  const styledMapType = new google.maps.StyledMapType([{'featureType': 'administrative','elementType': 'geometry.fill','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'geometry.stroke','stylers': [{'visibility': 'on'}]},{'featureType': 'administrative','elementType': 'labels.text.fill','stylers': [{'color': '#495421'}]},{'featureType': 'administrative','elementType': 'labels.text.stroke','stylers': [{'visibility': 'on'},{'weight': 4.1}]},{'featureType': 'landscape','elementType': 'geometry.fill','stylers': [{'color': '#daebc6'},{'visibility': 'on'}]},{'featureType': 'landscape.natural.terrain','elementType': 'geometry.fill','stylers': [{'color': '#cae9c2'}]},{'featureType': 'poi','elementType': 'geometry.fill','stylers': [{'color': '#769E72'}]},{'featureType': 'poi','elementType': 'labels.text.fill','stylers': [{'color': '#7B8758'}]},{'featureType': 'poi','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'poi.park','elementType': 'geometry','stylers': [{'visibility': 'simplified'},{'color': '#89d88f'}]},{'featureType': 'road','elementType': 'geometry.fill','stylers': [{'color': '#ff0000'}]},{'featureType': 'road','elementType': 'labels.text.fill','stylers': [{'color': '#459945'}]},{'featureType': 'road','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'road','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'road.highway','elementType': 'geometry','stylers': [{'color': '#ffffff'}]},{'featureType': 'road.arterial','elementType': 'geometry','stylers': [{'color': '#eeeeee'}]},{'featureType': 'road.local','elementType': 'geometry','stylers': [{'color': '#d8d8d8'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'water','elementType': 'geometry','stylers': [{'visibility': 'on'},{'color': '#d2f0ef'}]}]);
   const canvas = document.getElementById('map-canvas');
   const mapOptions = {
     zoom: 12,
@@ -248,12 +286,18 @@ App.showMapSecret = function(e){
   if (e) e.preventDefault();
   console.log('Gardens was clicked');
   this.$main.html(`<div id='map-canvas'></div>`);
+  const styledMapType = new google.maps.StyledMapType([{'stylers': [{'hue': '#baf4c4'},{'saturation': 10}]},{'featureType': 'water','stylers': [{'color': '#effefd'}]},{'featureType': 'all','elementType': 'labels','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'labels','stylers': [{'visibility': 'on'}]},{'featureType': 'road','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]}]);
   const canvas = document.getElementById('map-canvas');
   const mapOptions = {
     zoom: 12,
     center: new google.maps.LatLng(51.506178,-0.088369),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
+    disableDoubleClickZoom: true,
+    mapTypeControlOptions: {
+      mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+        'styled_map']
+    },
     zoomControl: true,
     zoomControlOptions: {
       position: google.maps.ControlPosition.LEFT_CENTER
@@ -265,6 +309,8 @@ App.showMapSecret = function(e){
     }
   };
   App.map = new google.maps.Map(canvas, mapOptions);
+  App.map.mapTypes.set('styled_map', styledMapType);
+  App.map.setMapTypeId('styled_map');
   App.getGardensSecret();
 };
 
@@ -299,7 +345,7 @@ App.createMarkerForGardenSecret = function(garden) {
 App.addGarden = function(coords) {
   console.log('Add a garden was clicked');
   this.$modalcontent.html(`
-    <h2>Add a garden</h2>
+    <div class="addGardenModal"><h2>Add a garden</h2>
     <form method='post' action='/gardens'>
       <div class='form-group'>
         <input class='form-control' type='text' name='garden[name]' placeholder='Garden Name'>
@@ -311,13 +357,13 @@ App.addGarden = function(coords) {
         <input class='form-control' type='text' name='garden[image]' placeholder='Image'>
       </div>
       <div class='form-group'>
-        <input class='form-control' type='text' name='garden[lat]' placeholder='Garden latitude' value="${coords.lat()}">
+        <input class='form-control' type='text' name='garden[lat]' placeholder='Garden latitude' value='${coords.lat()}'>
       </div>
       <div class='form-group'>
-        <input class='form-control' type='text' name='garden[lng]' placeholder='Garden Longitude' value="${coords.lng()}">
+        <input class='form-control' type='text' name='garden[lng]' placeholder='Garden Longitude' value='${coords.lng()}'>
       </div>
       <input class='btn btn-primary' type='submit' value='Add Garden'>
-    </form>
+    </form></div>
   `);
   this.$modal.modal('show');
 };
@@ -331,16 +377,15 @@ App.userGarden = function(e) {
     const userId  = JSON.parse(window.atob(payload)).id;
     console.log(userId);
     this.ajaxRequest(`${this.apiUrl}/gardens`, 'get', null, (data) => {
-      this.$modalcontent.html('<ul>');
+      this.$modalcontent.html('<div class="userGardenModal"><ul class="userGardenUl"></ul></div>');
       $.each(data.gardens, (index, garden) => {
         if (userId === garden.user) {
           console.log(garden);
-          this.$modalcontent.append(`
+          $('ul.userGardenUl').append(`
             <li>${garden.name}</li>
-            <input data-identifier="${garden._id}" class='btn btn-primary editGarden' type='submit' value='Edit Garden'>
+            <input data-identifier='${garden._id}' class='btn btn-primary editGarden' type='submit' value='Edit Garden'>
             <form method='delete' action='/gardens/${garden._id}'><input class='btn btn-primary deleteGarden' type='submit' value='Delete Garden'></form>
           `);
-          this.$modalcontent.append('</ul>');
           this.$modal.modal('show');
         }
       });
@@ -353,9 +398,9 @@ App.editGarden = function(e) {
   console.log('edit garden was clicked');
   this.ajaxRequest(`${this.apiUrl}/gardens/${e.target.getAttribute('data-identifier')}`, 'get', null, (data) => {
     App.$modalcontent.html(`
-      <h2>Edit garden</h2>
+      <div class="editGardenModal"><h2>Edit garden</h2>
       <form method='post' action='/gardens/${data.garden._id}'>
-        <input type="hidden" name="_method" value="put">
+        <input type='hidden' name='_method' value='put'>
         <div class='form-group'>
           <input class='form-control' type='text' name='garden[name]' value='${data.garden.name}'>
         </div>
@@ -372,7 +417,7 @@ App.editGarden = function(e) {
           <input class='form-control' type='text' name='garden[lng]' value='${data.garden.lng}'>
         </div>
         <input class='btn btn-primary' type='submit' value='Edit Garden'>
-      </form>
+      </form></div>
     `);
   });
 };
@@ -422,9 +467,9 @@ App.currentUser = function() {
     const payload = token.split('.')[1];
     const userId  = JSON.parse(window.atob(payload)).id;
     this.ajaxRequest(`${this.apiUrl}/users/${userId}`, 'get', null, data => {
-      $('.navbar-right').append(`
-        <li class='nav-item loggedIn helloUser'>
-          <a class='nav-link' href='#'>Hello ${data.user.firstName}</a>
+      $('.navbar-nav').append(`
+        <li class='nav-item loggedIn helloUser rightSide2 signUpNavBarLi'>
+          <a class='nav-link signUpNavBarA' href='#'>Hello ${data.user.firstName}</a>
         </li>`);
     });
   }
