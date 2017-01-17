@@ -135,7 +135,7 @@ img {
 .addGardenModal {
   width: 500px;
   text-align: center;
-  background-color: #56876D;
+  background-color: #709255;
   padding: 5px;
   margin: 0 auto;
   font-family: 'Raleway', sans-serif;
@@ -181,13 +181,7 @@ img {
 .infoWindow {
   text-align: center;
   margin: 0 auto;
-}
-
-.infoWindowHeader {
-  padding: 10px;
-  background-color: #facade;
-  color: white;
-  border-radius: 2px 2px 0 0;
+  font-family: 'Raleway', sans-serif;
 }
 
 .rightSide {
@@ -201,12 +195,12 @@ img {
 }
 
 .helloUser {
-  background-color: #56876D;
+  background-color: #709255;
 }
 
 .userGardenModal {
   width: 500px;
-  background-color: #56876D;
+  background-color: #709255;
   ul {
     width: 500px;
   }
@@ -214,11 +208,71 @@ img {
 
 .editGardenModal {
   width: 500px;
-  background-color: #56876D;
+  background-color: #709255;
 }
 
 .modal-content {
   ul li {
     list-style-type: none;
   }
+}
+
+.instructions {
+  margin: 0 auto;
+  text-align: center;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background-color: #709255;
+  transition-property: background-color, border-radius;
+  transition-duration: 2s;
+  transition-timing-function: linear, ease;
+  h1 {
+    font-family: 'Dawning of a New Day', cursive;
+    font-size: 60px;
+    font-weight: 800px;
+    transition-property: color, padding-top;
+    transition-duration: 2s;
+    transition-timing-function: linear, ease;
+    // vertical-align: middle;
+    padding-top: 110px;
+    margin-bottom: 0px;
+    color: white;
+  }
+
+  // h6 {
+  //   font-family: 'Raleway', sans-serif;
+  //   font-size: 4px;
+  //   transition-property: color, font-size;
+  //   transition-duration: 2s;
+  //   transition-timing-function: linear, ease;
+  //   color: rgba(255,105,180,1);
+  // }
+  //
+  // p {
+  //   font-family: 'Raleway', sans-serif;
+  //   font-size: 3px;
+  //   transition-property: color, font-size;
+  //   transition-duration: 2s;
+  //   transition-timing-function: linear, ease;
+  //   color: rgba(255,105,180,1);
+  // }
+}
+
+.instructions:hover {
+  border-radius: 5px;
+  background-color: rgba(255, 155, 206,1);
+  h1 {
+    color: #3F293C;
+    text-decoration: underline;
+    padding-top: 80px;
+  }
+  // h6 {
+  //   font-size: 15px;
+  //   color: #3F293C;
+  // }
+  // p {
+  //   font-size: 12px;
+  //   color: #3F293C;
+  // }
 }

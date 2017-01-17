@@ -11,22 +11,6 @@ App.init = function() {
   console.log(date);
   $('#time').text(date);
 
-  App.getWeatherTimes = function() {
-    console.log('Get weather timesg logging');
-    $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=51.5074&lon=0.1278&mode=JSON&APPID=a7960494b38d3fe6fb56a4880fc25bc8`).done(data => {
-      $.each(data.list, (index, time) => {
-        console.log(data);
-        console.log(time.dt_txt);
-        $('.weatherTimes').append(`<option>${time.dt_txt}</option>`);
-        $(`.${time.dt}`).on('click', function() {
-          console.log(time);
-        });
-      });
-    });
-  };
-
-  App.getWeatherTimes();
-
   $('.currentTime').text(date);
   this.$main  = $('main');
   this.$modalcontent = $('.modal-content');
@@ -35,12 +19,11 @@ App.init = function() {
   $('.register').on('click', this.register.bind(this));
   $('.login').on('click', this.login.bind(this));
   $('.logout').on('click', this.logout.bind(this));
-  $('.homePage').on('click', this.homePage.bind(this));
+  // $('.homePage').on('click', this.homePage.bind(this));
   $('#gardens').on('click', this.showMapAgain.bind(this));
   $('.userGardens').on('click', this.userGarden.bind(this));
   $('#secretGardens').on('click', this.showMapSecret.bind(this));
   $('body').on('click', '.editGarden', this.editGarden.bind(this));
-  // $('.deleteGarden').on('click', this.deleteGarden.bind(this));
   this.$modal.on('submit', 'form', this.handleForm);
 
   if (this.getToken()) {
@@ -51,8 +34,9 @@ App.init = function() {
 };
 
 App.loggedInState = function(){
-  $('.navigationBar').css('background-color', '#40D083');
-  $('.bloomIcon').css('background-color', '#56876D');
+  $('.navigationBar').css('background-color', '#89d88f');
+  $('.bloomIcon').css('background-color', '#709255');
+  $('.homePage').on('click',App.instructionPage.bind(this));
   $('.loggedIn').show();
   $('.loggedOut').hide();
   App.showMapLoggedIn();
@@ -63,6 +47,7 @@ App.loggedInState = function(){
 App.loggedOutState = function(){
   $('.navigationBar').css('background-color', 'rgba(255, 155, 206,1)');
   $('.bloomIcon').css('background-color', 'rgba(255,105,180,1)');
+  $('.homePage').on('click',App.homePage.bind(this));
   $('.loggedIn').hide();
   $('.loggedOut').show();
   this.showMap();
@@ -127,6 +112,13 @@ App.homePage = function(e) {
   if (e) e.preventDefault();
   console.log('Home page was clicked');
   this.$modalcontent.html(`<div class='mainImage'><h1>Bloom</h1><h6>A GUIDE TO LONDON'S SECRET GARDENS.</h6><p>LOG IN OR SIGN UP</p></div>`);
+  this.$modal.modal('show');
+};
+
+App.instructionPage = function(e) {
+  if (e) e.preventDefault();
+  console.log('instructions page was clicked');
+  this.$modalcontent.html(`<div class='instructions'><h1>Bloom Instructions</h1></div>`);
   this.$modal.modal('show');
 };
 
@@ -248,7 +240,8 @@ App.createMarkerForGarden = function(garden) {
   const marker = new google.maps.Marker({
     position: latlng,
     map: App.map,
-    animation: google.maps.Animation.DROP
+    animation: google.maps.Animation.DROP,
+    icon: '/images/rose.png'
   });
   // this.getWeatherTimes(garden, marker);
   this.getWeatherInfo(garden, marker);
@@ -257,23 +250,27 @@ App.createMarkerForGarden = function(garden) {
 App.getWeatherInfo = function(garden, marker) {
   console.log(marker);
   $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&&units=metric&APPID=a7960494b38d3fe6fb56a4880fc25bc8`).done(data => {
-    const temp = data.list[0].main.temp;
-    const weather = data.list[0].weather[0].description;
-    const date = data.dt_text;
-    console.log(data);
-    console.log(date);
-    console.log(temp, weather);
-    this.addInfoWindowForGarden(garden, marker, weather, temp);
+    const tempNow = data.list[0].main.temp;
+    const weatherNow = data.list[0].weather[0].description;
+    const tempPlus3 = data.list[1].main.temp;
+    const weatherPlus3 = data.list[1].weather[0].description;
+    const tempPlus6 = data.list[2].main.temp;
+    const weatherPlus6 = data.list[2].weather[0].description;
+    const tempPlus9 = data.list[3].main.temp;
+    const weatherPlus9 = data.list[3].weather[0].description;
+    const tempPlus12 = data.list[4].main.temp;
+    const weatherPlus12 = data.list[4].weather[0].description;
+    this.addInfoWindowForGarden(garden, marker, weatherNow, tempNow, weatherPlus3, tempPlus3, weatherPlus6,tempPlus6, weatherPlus9, tempPlus9, weatherPlus12, tempPlus12);
   });
 };
 
-App.addInfoWindowForGarden = function(garden, marker, weather, temp) {
+App.addInfoWindowForGarden = function(garden, marker, weatherNow, tempNow, weatherPlus3,   tempPlus3, weatherPlus6,tempPlus6, weatherPlus9, tempPlus9, weatherPlus12, tempPlus12) {
   google.maps.event.addListener(marker, 'click', () => {
     if (typeof this.infoWindow !== 'undefined') this.infoWindow.close();
 
     this.infoWindow = new google.maps.InfoWindow({
-      content: `<div class='infoWindow'><header class = 'infoWindowHeader'><h4>${ garden.name}</h4></header><img src='${garden.image}'></img><p>${garden.description }</p><p>${weather}, ${temp}</p></div>`,
-      maxWidth: '260'
+      content: `<div class='infoWindow'><h6>${ garden.name}</h6><img src='${garden.image}'></img><p>${garden.description }</p><p>Now, ${tempNow} degrees, ${weatherNow}</p><p>+3hrs, ${tempPlus3} degrees, ${weatherPlus3}</p><p>+6hrs, ${tempPlus6} degrees, ${weatherPlus6}</p><p>+9hrs, ${tempPlus9} degrees, ${weatherPlus9}</p><p>+12hrs, ${tempPlus12} degrees, ${weatherPlus12}</p></div>`,
+      maxWidth: '400'
     });
 
     this.infoWindow.open(this.map, marker);
@@ -289,8 +286,8 @@ App.showMapSecret = function(e){
   const styledMapType = new google.maps.StyledMapType([{'stylers': [{'hue': '#baf4c4'},{'saturation': 10}]},{'featureType': 'water','stylers': [{'color': '#effefd'}]},{'featureType': 'all','elementType': 'labels','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'labels','stylers': [{'visibility': 'on'}]},{'featureType': 'road','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]}]);
   const canvas = document.getElementById('map-canvas');
   const mapOptions = {
-    zoom: 12,
-    center: new google.maps.LatLng(51.506178,-0.088369),
+    zoom: 13,
+    center: new google.maps.LatLng(51.5117321,-0.1254584),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
     disableDoubleClickZoom: true,
@@ -335,11 +332,10 @@ App.createMarkerForGardenSecret = function(garden) {
     icon: '/images/icon.png'
   });
   google.maps.event.addListener(marker, 'mouseover', function() {
-    marker.setIcon('../images/blue_flower.ico');
+    marker.setIcon('../images/roseicon.png');
     marker.setVisible(true);
   });
-  this.getWeatherInfo(garden);
-  this.addInfoWindowForGarden(garden, marker);
+  this.getWeatherInfo(garden, marker);
 };
 
 App.addGarden = function(coords) {
