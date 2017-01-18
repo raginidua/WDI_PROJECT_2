@@ -122,7 +122,7 @@ App.homePage = function(e) {
 App.instructionPage = function(e) {
   if (e) e.preventDefault();
   console.log('instructions page was clicked');
-  this.$modalcontent.html(`<div class='instructions'><h1>Bloom</h1><p>Welcome to Bloom, the exclusive guide to London's hidden gardens and parks. Select 'Secret View' to find the gardens by moving the mouse.  Select 'Gardens' to find a secret garden near you. Double click on the map to add a garden.</p></div>`);
+  this.$modalcontent.html(`<div class='instructions'><h1>Bloom</h1><p>Welcome to Bloom, the exclusive guide to London's hidden gardens and parks. Select 'Secret View' to find the gardens by moving the mouse.  Select 'Gardens' to find a secret garden near you. Double click on the map to share your secret garden.</p></div>`);
   this.$modal.modal('show');
 };
 
@@ -469,7 +469,7 @@ App.currentUser = function() {
     const userId  = JSON.parse(window.atob(payload)).id;
     this.ajaxRequest(`${this.apiUrl}/users/${userId}`, 'get', null, data => {
       $('.navbar-nav').append(`
-        <li class='nav-item loggedIn helloUser rightSide2 signUpNavBarLi'>
+        <li class='nav-item loggedIn helloUser rightSide2 signUpNavBarLi active'>
           <a class='nav-link signUpNavBarA' href='#'>Hello ${data.user.firstName}</a>
         </li>`);
     });
