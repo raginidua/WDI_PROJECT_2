@@ -9,17 +9,14 @@ body {
   margin: 0 auto;
 }
 
-img {
-  width: 190px
-}
-
 .bloomIcon {
   font-family: 'Dawning of a New Day', cursive;
   font-weight: 900;
   font-size: 35px;
   margin: 0 0 0 0;
   padding: 0px 2px 0px 2px;
-  background-color: rgba(255,105,180,1);
+  background-color: #e34669;
+  // background-color: rgba(255,105,180,1);
   color: white;
 }
 
@@ -48,7 +45,8 @@ img {
 }
 
 .navigationBar {
-  background-color: rgba(255, 155, 206,1);
+  background-color: #F596A5;
+  // background-color: rgba(255, 155, 206,0.8);
   border-top: 2px solid black;
   border-bottom: 2px solid black;
   padding: 0;
@@ -68,7 +66,8 @@ img {
   width: 350px;
   height: 350px;
   border-radius: 50%;
-  background-color: rgba(255,105,180,1);
+  background-color: #e34669;
+  // background-color: rgba(255,105,180,1);
   transition-property: background-color, border-radius;
   transition-duration: 2s;
   transition-timing-function: linear, ease;
@@ -91,7 +90,7 @@ img {
     transition-property: color, font-size;
     transition-duration: 2s;
     transition-timing-function: linear, ease;
-    color: rgba(255,105,180,1);
+    color: #e34669;
   }
 
   p {
@@ -100,13 +99,14 @@ img {
     transition-property: color, font-size;
     transition-duration: 2s;
     transition-timing-function: linear, ease;
-    color: rgba(255,105,180,1);
+    color: #e34669;
   }
 }
 
 .mainImage:hover {
   border-radius: 5px;
-  background-color: rgba(255, 155, 206,1);
+  // background-color: rgba(255, 155, 206,1);
+  background-color: #F4ACB7;
   h1 {
     color: #3F293C;
     text-decoration: underline;
@@ -125,7 +125,7 @@ img {
 .logInModal {
   width: 500px;
   text-align: center;
-  background-color: rgba(255, 155, 206,1);
+  background-color: #F4ACB7;
   padding: 5px;
   margin: 0 auto;
   font-family: 'Raleway', sans-serif;
@@ -135,7 +135,7 @@ img {
 .addGardenModal {
   width: 500px;
   text-align: center;
-  background-color: #709255;
+  background-color: #abe06e;
   padding: 5px;
   margin: 0 auto;
   font-family: 'Raleway', sans-serif;
@@ -153,18 +153,42 @@ img {
   border: 2px solid white;
   background-color: rgba(1,1,1,0);
   transition-property: background-color;
-  transition-duration: 1s;
+  transition-duration: 0.5s;
   transition-timing-function: linear, ease;
 }
 
 .logInButton:hover {
-  background-color: rgba(255,105,180,1);
+  background-color: #E9526A;
+}
+
+.editGardenButton {
+  border: 2px solid white;
+  background-color: rgba(1,1,1,0);
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  transition-timing-function: linear, ease;
+}
+
+.editGardenButton:hover {
+  background-color: #95D051;
+}
+
+.addGardenButton {
+  border: 2px solid white;
+  background-color: rgba(1,1,1,0);
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  transition-timing-function: linear, ease;
+}
+
+.addGardenButton:hover {
+  background-color: #95D051;
 }
 
 .signInModal {
   width: 500px;
   text-align: center;
-  background-color: rgba(255, 155, 206,1);
+  background-color: #F4ACB7;
   padding: 5px;
   margin: 0 auto;
   border-radius: 5px;
@@ -180,8 +204,39 @@ img {
 
 .infoWindow {
   text-align: center;
-  margin: 0 auto;
   font-family: 'Raleway', sans-serif;
+  width: 400px;
+  img {
+    width: 190px;
+    height: 190px;
+  }
+  .gardenImage {
+    float: left;
+    width: 190px;
+  }
+  .gardenDescription {
+    width: 190px;
+    float: right;
+    p {
+      align: justify;
+      font-size: 12px;
+    }
+  }
+  h6 {
+    font-weight: bold;
+  }
+  .weather {
+    margin-top: 3px;
+    float: left;
+    width: 396px;
+    h6 {
+      font-size: 13px;
+    }
+    p {
+      margin-top: 0px;
+      font-size: 12px;
+    }
+  }
 }
 
 .rightSide {
@@ -195,21 +250,50 @@ img {
 }
 
 .helloUser {
-  background-color: #709255;
+  background-color: #95D051;
 }
 
 .userGardenModal {
-  width: 500px;
-  background-color: #709255;
-  ul {
-    width: 500px;
+  width: 300px;
+  font-family: 'Raleway', sans-serif;
+  background-color: #abe06e;
+  margin: 0 auto;
+  border-radius: 5px;
+  .userGardenUl {
+  width: 295px;
+  background-color: #abe06e;
+  margin: 0;
+  padding: 0;
+  display: inline;
+    .userGardenCollection {
+      display: inline;
+      background-color:blue;
+
+      .userGardenImage {
+        width: 120px;
+      }
+      .editGarden {
+        font-size: 11px;
+        margin: 0 auto;
+        display: block;
+      }
+      .deleteGarden {
+        font-size: 11px;
+        margin: 0 auto;
+      }
+    }
   }
 }
 
 .editGardenModal {
   width: 500px;
-  background-color: #709255;
+  background-color: #abe06e;
+  padding: 10px;
+  margin: 0 auto;
+  border-radius: 5px;
 }
+
+
 
 .modal-content {
   ul li {
@@ -223,56 +307,42 @@ img {
   width: 350px;
   height: 350px;
   border-radius: 50%;
-  background-color: #709255;
+  background-color: #abe06e;
   transition-property: background-color, border-radius;
   transition-duration: 2s;
   transition-timing-function: linear, ease;
   h1 {
     font-family: 'Dawning of a New Day', cursive;
-    font-size: 60px;
+    font-size: 70px;
     font-weight: 800px;
-    transition-property: color, padding-top;
+    transition-property: color, padding-top, font-size;
     transition-duration: 2s;
     transition-timing-function: linear, ease;
     // vertical-align: middle;
-    padding-top: 110px;
+    padding-top: 122px;
     margin-bottom: 0px;
     color: white;
   }
-
-  // h6 {
-  //   font-family: 'Raleway', sans-serif;
-  //   font-size: 4px;
-  //   transition-property: color, font-size;
-  //   transition-duration: 2s;
-  //   transition-timing-function: linear, ease;
-  //   color: rgba(255,105,180,1);
-  // }
-  //
-  // p {
-  //   font-family: 'Raleway', sans-serif;
-  //   font-size: 3px;
-  //   transition-property: color, font-size;
-  //   transition-duration: 2s;
-  //   transition-timing-function: linear, ease;
-  //   color: rgba(255,105,180,1);
-  // }
+  p {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1px;
+    transition-property: color, font-size;
+    transition-duration: 2s;
+    transition-timing-function: linear, ease;
+    color: #abe06e;
+  }
 }
 
 .instructions:hover {
   border-radius: 5px;
-  background-color: rgba(255, 155, 206,1);
+  background-color: #F3B6BE;
   h1 {
     color: #3F293C;
-    text-decoration: underline;
-    padding-top: 80px;
+    padding-top: 50px;
+    font-size: 50px;
   }
-  // h6 {
-  //   font-size: 15px;
-  //   color: #3F293C;
-  // }
-  // p {
-  //   font-size: 12px;
-  //   color: #3F293C;
-  // }
+  p {
+    font-size: 18px;
+    color: #3F293C;
+  }
 }

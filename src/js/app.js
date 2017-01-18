@@ -34,8 +34,10 @@ App.init = function() {
 };
 
 App.loggedInState = function(){
-  $('.navigationBar').css('background-color', '#89d88f');
-  $('.bloomIcon').css('background-color', '#709255');
+  // $('.navigationBar').css('background-color', 'rgba(93, 205, 100,0.7)');
+  $('.navigationBar').css('background-color', '#CEECAC');
+  $('.bloomIcon').css('background-color', '#95D051');
+  $('.bloomIcon').css('margin-right', '15px');
   $('.homePage').on('click',App.instructionPage.bind(this));
   $('.loggedIn').show();
   $('.loggedOut').hide();
@@ -45,8 +47,10 @@ App.loggedInState = function(){
 };
 
 App.loggedOutState = function(){
-  $('.navigationBar').css('background-color', 'rgba(255, 155, 206,1)');
-  $('.bloomIcon').css('background-color', 'rgba(255,105,180,1)');
+  // $('.navigationBar').css('background-color', 'rgba(255, 155, 206,0.8)');
+  $('.navigationBar').css('background-color', '#F596A5');
+  // $('.bloomIcon').css('background-color', 'rgba(255,105,180,1)');
+  $('.bloomIcon').css('background-color', '#e34669');
   $('.homePage').on('click',App.homePage.bind(this));
   $('.loggedIn').hide();
   $('.loggedOut').show();
@@ -111,14 +115,14 @@ App.logout = function(e){
 App.homePage = function(e) {
   if (e) e.preventDefault();
   console.log('Home page was clicked');
-  this.$modalcontent.html(`<div class='mainImage'><h1>Bloom</h1><h6>A GUIDE TO LONDON'S SECRET GARDENS.</h6><p>LOG IN OR SIGN UP</p></div>`);
+  this.$modalcontent.html(`<div class='mainImage'><h1>Bloom</h1><h6>A GUIDE TO LONDON'S SECRET GARDENS</h6><p>LOG IN OR SIGN UP</p></div>`);
   this.$modal.modal('show');
 };
 
 App.instructionPage = function(e) {
   if (e) e.preventDefault();
   console.log('instructions page was clicked');
-  this.$modalcontent.html(`<div class='instructions'><h1>Bloom Instructions</h1></div>`);
+  this.$modalcontent.html(`<div class='instructions'><h1>Bloom</h1><p>Welcome to Bloom, the exclusive guide to London's hidden gardens and parks. Select 'Secret View' to find the gardens by moving the mouse.  Select 'Gardens' to find a secret garden near you. Double click on the map to add a garden.</p></div>`);
   this.$modal.modal('show');
 };
 
@@ -126,7 +130,7 @@ App.showMap = function(e){
   if (e) e.preventDefault();
   console.log('Gardens was clicked');
   this.$main.html(`<div id='map-canvas'></div>`);
-  const styledMapType = new google.maps.StyledMapType([{'featureType': 'administrative','elementType': 'labels.text.fill','stylers': [{'color': '#444444'}]},{'featureType': 'landscape','elementType': 'all','stylers': [{'color': '#f2f2f2'}]},{'featureType': 'poi','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'road','elementType': 'all','stylers': [{'saturation': -100},{'lightness': 45}]},{'featureType': 'road.highway','elementType': 'all','stylers': [{'visibility': 'simplified'}]},{'featureType': 'road.arterial','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'water','elementType': 'all','stylers': [{'color': '#ebd5ec'},{'visibility': 'on'}]}]);
+  const styledMapType = new google.maps.StyledMapType([{'featureType': 'administrative','elementType': 'labels.text.fill','stylers': [{'color': '#444444'}]},{'featureType': 'landscape','elementType': 'all','stylers': [{'color': '#f2f2f2'}]},{'featureType': 'poi','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'road','elementType': 'all','stylers': [{'saturation': -100},{'lightness': 45}]},{'featureType': 'road.highway','elementType': 'all','stylers': [{'visibility': 'simplified'}]},{'featureType': 'road.arterial','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'water','elementType': 'all','stylers': [{'color': '#F9D6DB'},{'visibility': 'on'}]}]);
   const canvas = document.getElementById('map-canvas');
   const mapOptions = {
     zoom: 12,
@@ -156,7 +160,7 @@ App.showMapLoggedIn = function(e){
   if (e) e.preventDefault();
   console.log('Gardens was clicked');
   this.$main.html(`<div id='map-canvas'></div>`);
-  const styledMapType = new google.maps.StyledMapType([{'featureType': 'administrative','elementType': 'geometry.fill','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'geometry.stroke','stylers': [{'visibility': 'on'}]},{'featureType': 'administrative','elementType': 'labels.text.fill','stylers': [{'color': '#495421'}]},{'featureType': 'administrative','elementType': 'labels.text.stroke','stylers': [{'visibility': 'on'},{'weight': 4.1}]},{'featureType': 'landscape','elementType': 'geometry.fill','stylers': [{'color': '#daebc6'},{'visibility': 'on'}]},{'featureType': 'landscape.natural.terrain','elementType': 'geometry.fill','stylers': [{'color': '#cae9c2'}]},{'featureType': 'poi','elementType': 'geometry.fill','stylers': [{'color': '#769E72'}]},{'featureType': 'poi','elementType': 'labels.text.fill','stylers': [{'color': '#7B8758'}]},{'featureType': 'poi','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'poi.park','elementType': 'geometry','stylers': [{'visibility': 'simplified'},{'color': '#89d88f'}]},{'featureType': 'road','elementType': 'geometry.fill','stylers': [{'color': '#ff0000'}]},{'featureType': 'road','elementType': 'labels.text.fill','stylers': [{'color': '#459945'}]},{'featureType': 'road','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'road','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'road.highway','elementType': 'geometry','stylers': [{'color': '#ffffff'}]},{'featureType': 'road.arterial','elementType': 'geometry','stylers': [{'color': '#eeeeee'}]},{'featureType': 'road.local','elementType': 'geometry','stylers': [{'color': '#d8d8d8'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'water','elementType': 'geometry','stylers': [{'visibility': 'on'},{'color': '#d2f0ef'}]}]);
+  const styledMapType = new google.maps.StyledMapType([{'featureType': 'administrative','elementType': 'geometry.fill','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'geometry.stroke','stylers': [{'visibility': 'on'}]},{'featureType': 'administrative','elementType': 'labels.text.fill','stylers': [{'color': '#495421'}]},{'featureType': 'administrative','elementType': 'labels.text.stroke','stylers': [{'visibility': 'on'},{'weight': 4.1}]},{'featureType': 'landscape','elementType': 'geometry.fill','stylers': [{'color': '#daebc6'},{'visibility': 'on'}]},{'featureType': 'landscape.natural.terrain','elementType': 'geometry.fill','stylers': [{'color': '#cae9c2'}]},{'featureType': 'poi','elementType': 'geometry.fill','stylers': [{'color': '#769E72'}]},{'featureType': 'poi','elementType': 'labels.text.fill','stylers': [{'color': '#7B8758'}]},{'featureType': 'poi','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'poi.park','elementType': 'geometry','stylers': [{'visibility': 'simplified'},{'color': '#ABE06E'}]},{'featureType': 'road','elementType': 'geometry.fill','stylers': [{'color': '#ff0000'}]},{'featureType': 'road','elementType': 'labels.text.fill','stylers': [{'color': '#459945'}]},{'featureType': 'road','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'road','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'road.highway','elementType': 'geometry','stylers': [{'color': '#ffffff'}]},{'featureType': 'road.arterial','elementType': 'geometry','stylers': [{'color': '#eeeeee'}]},{'featureType': 'road.local','elementType': 'geometry','stylers': [{'color': '#d8d8d8'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'water','elementType': 'geometry','stylers': [{'visibility': 'on'},{'color': '#d2f0ef'}]}]);
   const canvas = document.getElementById('map-canvas');
   const mapOptions = {
     zoom: 12,
@@ -187,7 +191,7 @@ App.showMapAgain = function(e){
   console.log();
   console.log('Gardens was clicked');
   this.$main.html(`<div id='map-canvas'></div>`);
-  const styledMapType = new google.maps.StyledMapType([{'featureType': 'administrative','elementType': 'geometry.fill','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'geometry.stroke','stylers': [{'visibility': 'on'}]},{'featureType': 'administrative','elementType': 'labels.text.fill','stylers': [{'color': '#495421'}]},{'featureType': 'administrative','elementType': 'labels.text.stroke','stylers': [{'visibility': 'on'},{'weight': 4.1}]},{'featureType': 'landscape','elementType': 'geometry.fill','stylers': [{'color': '#daebc6'},{'visibility': 'on'}]},{'featureType': 'landscape.natural.terrain','elementType': 'geometry.fill','stylers': [{'color': '#cae9c2'}]},{'featureType': 'poi','elementType': 'geometry.fill','stylers': [{'color': '#769E72'}]},{'featureType': 'poi','elementType': 'labels.text.fill','stylers': [{'color': '#7B8758'}]},{'featureType': 'poi','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'poi.park','elementType': 'geometry','stylers': [{'visibility': 'simplified'},{'color': '#89d88f'}]},{'featureType': 'road','elementType': 'geometry.fill','stylers': [{'color': '#ff0000'}]},{'featureType': 'road','elementType': 'labels.text.fill','stylers': [{'color': '#459945'}]},{'featureType': 'road','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'road','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'road.highway','elementType': 'geometry','stylers': [{'color': '#ffffff'}]},{'featureType': 'road.arterial','elementType': 'geometry','stylers': [{'color': '#eeeeee'}]},{'featureType': 'road.local','elementType': 'geometry','stylers': [{'color': '#d8d8d8'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'water','elementType': 'geometry','stylers': [{'visibility': 'on'},{'color': '#d2f0ef'}]}]);
+  const styledMapType = new google.maps.StyledMapType([{'featureType': 'administrative','elementType': 'geometry.fill','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'geometry.stroke','stylers': [{'visibility': 'on'}]},{'featureType': 'administrative','elementType': 'labels.text.fill','stylers': [{'color': '#495421'}]},{'featureType': 'administrative','elementType': 'labels.text.stroke','stylers': [{'visibility': 'on'},{'weight': 4.1}]},{'featureType': 'landscape','elementType': 'geometry.fill','stylers': [{'color': '#daebc6'},{'visibility': 'on'}]},{'featureType': 'landscape.natural.terrain','elementType': 'geometry.fill','stylers': [{'color': '#cae9c2'}]},{'featureType': 'poi','elementType': 'geometry.fill','stylers': [{'color': '#769E72'}]},{'featureType': 'poi','elementType': 'labels.text.fill','stylers': [{'color': '#7B8758'}]},{'featureType': 'poi','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'poi.park','elementType': 'geometry','stylers': [{'visibility': 'simplified'},{'color': '#ABE06E'}]},{'featureType': 'road','elementType': 'geometry.fill','stylers': [{'color': '#ff0000'}]},{'featureType': 'road','elementType': 'labels.text.fill','stylers': [{'color': '#459945'}]},{'featureType': 'road','elementType': 'labels.text.stroke','stylers': [{'color': '#ffffff'}]},{'featureType': 'road','elementType': 'labels.icon','stylers': [{'visibility': 'off'}]},{'featureType': 'road.highway','elementType': 'geometry','stylers': [{'color': '#ffffff'}]},{'featureType': 'road.arterial','elementType': 'geometry','stylers': [{'color': '#eeeeee'}]},{'featureType': 'road.local','elementType': 'geometry','stylers': [{'color': '#d8d8d8'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'water','elementType': 'geometry','stylers': [{'visibility': 'on'},{'color': '#d2f0ef'}]}]);
   const canvas = document.getElementById('map-canvas');
   const mapOptions = {
     zoom: 12,
@@ -269,7 +273,7 @@ App.addInfoWindowForGarden = function(garden, marker, weatherNow, tempNow, weath
     if (typeof this.infoWindow !== 'undefined') this.infoWindow.close();
 
     this.infoWindow = new google.maps.InfoWindow({
-      content: `<div class='infoWindow'><h6>${ garden.name}</h6><img src='${garden.image}'></img><p>${garden.description }</p><p>Now, ${tempNow} degrees, ${weatherNow}</p><p>+3hrs, ${tempPlus3} degrees, ${weatherPlus3}</p><p>+6hrs, ${tempPlus6} degrees, ${weatherPlus6}</p><p>+9hrs, ${tempPlus9} degrees, ${weatherPlus9}</p><p>+12hrs, ${tempPlus12} degrees, ${weatherPlus12}</p></div>`,
+      content: `<div class='infoWindow'><h6>${garden.name}</h6><div class="gardenImage"><img src='${garden.image}'></img></div><div class="gardenDescription"><p>${garden.description }</p></div><div class='weather'><h6>Weather</h6><p>Now, ${tempNow}°, ${weatherNow}. +3hrs, ${tempPlus3}°, ${weatherPlus3}. +6hrs, ${tempPlus6}°, ${weatherPlus6}. +9hrs, ${tempPlus9}°, ${weatherPlus9}. +12hrs, ${tempPlus12}°, ${weatherPlus12}</p></div></div>`,
       maxWidth: '400'
     });
 
@@ -283,7 +287,7 @@ App.showMapSecret = function(e){
   if (e) e.preventDefault();
   console.log('Gardens was clicked');
   this.$main.html(`<div id='map-canvas'></div>`);
-  const styledMapType = new google.maps.StyledMapType([{'stylers': [{'hue': '#baf4c4'},{'saturation': 10}]},{'featureType': 'water','stylers': [{'color': '#effefd'}]},{'featureType': 'all','elementType': 'labels','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'labels','stylers': [{'visibility': 'on'}]},{'featureType': 'road','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]}]);
+  const styledMapType = new google.maps.StyledMapType([{'stylers': [{'hue': '#AEDD77'},{'saturation': 10}]},{'featureType': 'water','stylers': [{'color': '#effefd'}]},{'featureType': 'all','elementType': 'labels','stylers': [{'visibility': 'off'}]},{'featureType': 'administrative','elementType': 'labels','stylers': [{'visibility': 'on'}]},{'featureType': 'road','elementType': 'all','stylers': [{'visibility': 'off'}]},{'featureType': 'transit','elementType': 'all','stylers': [{'visibility': 'off'}]}]);
   const canvas = document.getElementById('map-canvas');
   const mapOptions = {
     zoom: 13,
@@ -358,7 +362,7 @@ App.addGarden = function(coords) {
       <div class='form-group'>
         <input class='form-control' type='text' name='garden[lng]' placeholder='Garden Longitude' value='${coords.lng()}'>
       </div>
-      <input class='btn btn-primary' type='submit' value='Add Garden'>
+      <input class='btn btn-primary addGardenButton' type='submit' value='Add Garden'>
     </form></div>
   `);
   this.$modal.modal('show');
@@ -378,9 +382,10 @@ App.userGarden = function(e) {
         if (userId === garden.user) {
           console.log(garden);
           $('ul.userGardenUl').append(`
-            <li>${garden.name}</li>
-            <input data-identifier='${garden._id}' class='btn btn-primary editGarden' type='submit' value='Edit Garden'>
-            <form method='delete' action='/gardens/${garden._id}'><input class='btn btn-primary deleteGarden' type='submit' value='Delete Garden'></form>
+            <div class="userGardenCollection"><li>${garden.name}</li>
+            <img class="userGardenImage" src=${garden.image}></li>
+            <input data-identifier='${garden._id}' class='btn btn-primary editGarden editGarden' type='submit' value=' Edit '>
+            <form method='delete' action='/gardens/${garden._id}'><input class='btn btn-primary btn-danger deleteGarden' type='submit' value='Delete'></form></div>
           `);
           this.$modal.modal('show');
         }
@@ -412,7 +417,7 @@ App.editGarden = function(e) {
         <div class='form-group'>
           <input class='form-control' type='text' name='garden[lng]' value='${data.garden.lng}'>
         </div>
-        <input class='btn btn-primary' type='submit' value='Edit Garden'>
+        <input class='btn btn-primary editGardenButton' type='submit' value='Edit Garden'>
       </form></div>
     `);
   });

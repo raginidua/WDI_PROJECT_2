@@ -24,7 +24,7 @@ user1.save((err, user) => {
   const garden1 = new Garden({
     name: 'Japanese Roof Garden, SOAS',
     description: 'A serene space dedicated to forgiveness.  A period of repose amongst the artfully placed rocks, pebbles, and combed sand will help you find your inner harmony. Look out for the Kanji character on the granite water basin which represents the gardens dedication to forgiveness',
-    image: 'tbd',
+    image: '../images/soas.jpg',
     lat: '51.5223533',
     lng: '-0.1314477',
     user: user
@@ -62,19 +62,6 @@ user1.save((err, user) => {
     if (err) return console.log('Something went wrong saving garden');
     return console.log(`${garden.name} was saved.`);
   });
-});
-
-const user2 = new User({
-  firstName: 'Brad',
-  lastName: 'Pitt',
-  email: 'bradpitt@gmail.com',
-  password: 'password',
-  passwordConfirmation: 'password'
-});
-
-user2.save((err, user) => {
-  if (err) return console.log('Something went wrong saving user');
-  console.log(`${user.firstName} was saved.`);
 
   const garden4 = new Garden({
     name: 'Coutts Skyline Garden',
@@ -117,19 +104,6 @@ user2.save((err, user) => {
     if (err) return console.log('Something went wrong saving garden');
     return console.log(`${garden.name} was saved.`);
   });
-});
-
-const user3 = new User({
-  firstName: 'Ragini',
-  lastName: 'Dua',
-  email: 'raginidua@gmail.com',
-  password: 'password',
-  passwordConfirmation: 'password'
-});
-
-user3.save((err, user) => {
-  if (err) return console.log('Something went wrong saving user');
-  console.log(`${user.firstName} was saved.`);
 
   const garden7 = new Garden({
     name: 'Bina Gardens East',
@@ -186,6 +160,19 @@ user3.save((err, user) => {
     if (err) return console.log('Something went wrong saving garden');
     return console.log(`${garden.name} was saved.`);
   });
+});
+
+const user2 = new User({
+  firstName: 'Brad',
+  lastName: 'Pitt',
+  email: 'bradpitt@gmail.com',
+  password: 'password',
+  passwordConfirmation: 'password'
+});
+
+user2.save((err, user) => {
+  if (err) return console.log('Something went wrong saving user');
+  console.log(`${user.firstName} was saved.`);
 
   const garden11 = new Garden({
     name: 'Whitgift School Gardens',
@@ -354,6 +341,19 @@ user3.save((err, user) => {
     if (err) return console.log('Something went wrong saving garden');
     return console.log(`${garden.name} was saved.`);
   });
+});
+
+const user3 = new User({
+  firstName: 'Ragini',
+  lastName: 'Dua',
+  email: 'raginidua@gmail.com',
+  password: 'password',
+  passwordConfirmation: 'password'
+});
+
+user3.save((err, user) => {
+  if (err) return console.log('Something went wrong saving user');
+  console.log(`${user.firstName} was saved.`);
 
   const garden23 = new Garden({
     name: 'Mount Street Gardens',
@@ -424,5 +424,4 @@ user3.save((err, user) => {
     if (err) return console.log('Something went wrong saving garden');
     return console.log(`${garden.name} was saved.`);
   });
-
 });
