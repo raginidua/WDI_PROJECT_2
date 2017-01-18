@@ -50,7 +50,7 @@ App.loggedOutState = function(){
   // $('.navigationBar').css('background-color', 'rgba(255, 155, 206,0.8)');
   $('.navigationBar').css('background-color', '#F596A5');
   // $('.bloomIcon').css('background-color', 'rgba(255,105,180,1)');
-  $('.bloomIcon').css('background-color', '#e34669');
+  $('.bloomIcon').css('background-color', '#f16186');
   $('.homePage').on('click',App.homePage.bind(this));
   $('.loggedIn').hide();
   $('.loggedOut').show();

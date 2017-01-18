@@ -47,8 +47,8 @@ body {
 .navigationBar {
   background-color: #F596A5;
   // background-color: rgba(255, 155, 206,0.8);
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
+  border-top: 2px solid #222222;
+  border-bottom: 2px solid #222222;
   padding: 0;
 }
 
@@ -66,7 +66,7 @@ body {
   width: 350px;
   height: 350px;
   border-radius: 50%;
-  background-color: #e34669;
+  background-color: #f16186;
   // background-color: rgba(255,105,180,1);
   transition-property: background-color, border-radius;
   transition-duration: 2s;
@@ -90,7 +90,7 @@ body {
     transition-property: color, font-size;
     transition-duration: 2s;
     transition-timing-function: linear, ease;
-    color: #e34669;
+    color: #f16186;
   }
 
   p {
@@ -99,7 +99,7 @@ body {
     transition-property: color, font-size;
     transition-duration: 2s;
     transition-timing-function: linear, ease;
-    color: #e34669;
+    color: #f16186;
   }
 }
 
