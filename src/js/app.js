@@ -253,17 +253,23 @@ App.createMarkerForGarden = function(garden) {
 
 App.getWeatherInfo = function(garden, marker) {
   console.log(marker);
-  $.get(`http://api.openweathermap.org/data/2.5/forecast?lat=${garden.lat}&lon=${garden.lng}&mode=JSON&&units=metric&APPID=a7960494b38d3fe6fb56a4880fc25bc8`).done(data => {
-    const tempNow = data.list[0].main.temp;
-    const weatherNow = data.list[0].weather[0].description;
-    const tempPlus3 = data.list[1].main.temp;
-    const weatherPlus3 = data.list[1].weather[0].description;
-    const tempPlus6 = data.list[2].main.temp;
-    const weatherPlus6 = data.list[2].weather[0].description;
-    const tempPlus9 = data.list[3].main.temp;
-    const weatherPlus9 = data.list[3].weather[0].description;
-    const tempPlus12 = data.list[4].main.temp;
-    const weatherPlus12 = data.list[4].weather[0].description;
+  $.get({
+    url: `${App.apiUrl}/weather`,
+    data: {
+      lat: garden.lat,
+      lng: garden.lng
+    }
+  }).done(data => {
+    const tempNow = data.data.list[0].main.temp;
+    const weatherNow = data.data.list[0].weather[0].description;
+    const tempPlus3 = data.data.list[1].main.temp;
+    const weatherPlus3 = data.data.list[1].weather[0].description;
+    const tempPlus6 = data.data.list[2].main.temp;
+    const weatherPlus6 = data.data.list[2].weather[0].description;
+    const tempPlus9 = data.data.list[3].main.temp;
+    const weatherPlus9 = data.data.list[3].weather[0].description;
+    const tempPlus12 = data.data.list[4].main.temp;
+    const weatherPlus12 = data.data.list[4].weather[0].description;
     this.addInfoWindowForGarden(garden, marker, weatherNow, tempNow, weatherPlus3, tempPlus3, weatherPlus6,tempPlus6, weatherPlus9, tempPlus9, weatherPlus12, tempPlus12);
   });
 };
