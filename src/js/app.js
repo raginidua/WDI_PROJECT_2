@@ -2,7 +2,7 @@ const App = App || {};
 const google = google;
 
 App.init = function() {
-  this.apiUrl = 'https://bloom-secret-garden.herokuapp.com/';
+  this.apiUrl = 'https://bloom-secret-garden.herokuapp.com/api';
   const options = {
     weekday: 'short', year: 'numeric', month: 'short',
     day: 'numeric', hour: '2-digit', minute: '2-digit'
