@@ -342,7 +342,7 @@ App.createMarkerForGardenSecret = function(garden) {
     icon: '/images/icon.png'
   });
   google.maps.event.addListener(marker, 'mouseover', function() {
-    marker.setIcon('../images/roseicon.png');
+    marker.setIcon('/images/roseIcon.png');
     marker.setVisible(true);
   });
   this.getWeatherInfo(garden, marker);
