@@ -2,7 +2,7 @@
 
 **An app which allows users to find and share the location of secret gardens and hidden green spaces in London**
 
-**See it here: [Bloom](https://nameless-wave-41114.herokuapp.com/).**
+**See it here: [Bloom](https://bloom-secret-garden.herokuapp.com/).**
 
 ![image](http://i.imgur.com/ut5Wlu0.png)
 
@@ -47,10 +47,6 @@ I did this by using google.maps.event.addListener, and listening for a mouseover
 **Click My Gardens to Edit or Delete your Contributions**
 
 ![image](http://i.imgur.com/gFTaNrV.png?1)
-
-##Planning
-
-To be completed
 
 ##Technology Used
 
